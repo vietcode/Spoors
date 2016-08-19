@@ -6,8 +6,11 @@
     "start": "node node_modules/react-native/local-cli/cli.js start"
   },
   "dependencies": {
+    "apollo-client": "^0.4.12",
     "react": "15.2.1",
+    "react-apollo": "^0.4.6",
     "react-native": "0.31.0",
-    "react-native-maps": "^0.7.1"
+    "react-native-maps": "^0.7.1",
+    "redux": "^3.5.2"
   }
 }
