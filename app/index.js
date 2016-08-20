@@ -1,6 +1,6 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
+ * The root component that wraps the main app component with all 
+ * data-related components such as `ApolloProvider`.
  * @flow
  */
 
