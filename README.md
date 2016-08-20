@@ -12,6 +12,11 @@ For communication, we will use Apollo Client with its `react-apollo` integration
 
 For deployment, we will use CodePush so we only have to deploy to app stores once.
 
+## Resources
+
+- [Discussion](http://www.phuot.vn/threads/294864-C%C3%B9ng-t%E1%BA%A1o-n%C3%AAn-%E1%BB%A9ng-d%E1%BB%A5ng-Ph%C6%B0%E1%BB%A3t)
+- [Trello boards](https://trello.com/spoors)
+
 ## Develop
 
 - Follows instructions at https://facebook.github.io/react-native/docs/getting-started.html.
