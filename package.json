@@ -2,16 +2,29 @@
   "name": "Spoors",
   "version": "0.0.1",
   "private": true,
-  "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+  "devDependencies": {
+    "react-scripts": "^0.6.1"
   },
   "dependencies": {
-    "apollo-client": "^0.4.12",
-    "native-base": "github:geekyants/NativeBase",
-    "react": "15.2.1",
-    "react-apollo": "^0.4.6",
-    "react-native": "0.31.0",
-    "react-native-maps": "^0.7.1",
-    "redux": "^3.5.2"
+    "apollo-client": "^0.4.22",
+    "react": "^15.3.2",
+    "react-apollo": "^0.5.13",
+    "react-dom": "^15.3.2",
+    "react-native": "^0.35.0",
+    "react-native-maps": "^0.11.0",
+    "react-native-vector-icons": "^2.1.0",
+    "react-native-web": "0.0.47",
+    "react-redux": "^4.4.5",
+    "redux": "^3.6.0"
+  },
+  "scripts": {
+    "// start": "node node_modules/react-native/local-cli/cli.js start",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "startrn": "node ./scripts/startrn.js",
+    "android:pkg:build": "cd android && ./gradlew assembleRelease",
+    "android:pkg:install": "adb install android/app/build/outputs/apk/app-release.apk"
   }
 }
