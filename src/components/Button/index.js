@@ -1,31 +1,32 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  Text
 } from 'react-native';
 
 const styles = StyleSheet.create({
   button: {
-    height: 70,
-    backgroundColor: '#22a3ed',
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
-  },
-  label: {
-    color: 'white'
   }
 })
 
 class Button extends Component {
   render() {
-    let {children, ...other} = this.props;
-    const style = this.props.style || {};
+    let { 
+      children, style,
+      ...other
+    } = this.props;
 
     return (
       <TouchableOpacity
         {...other}
       >
-        {children}
+        <Text style={ [styles.button, style] }>
+          {children}
+        </Text>
       </TouchableOpacity>
     )
   }

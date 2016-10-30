@@ -11,6 +11,7 @@
     "react-apollo": "^0.5.13",
     "react-dom": "^15.3.2",
     "react-native": "^0.35.0",
+    "react-native-geocoder": "^0.4.5",
     "react-native-maps": "^0.11.0",
     "react-native-vector-icons": "^2.1.0",
     "react-native-web": "0.0.47",

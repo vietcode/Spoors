@@ -9,6 +9,7 @@ const {
 } = NavigationExperimental;
 
 import Explore from './Explore';
+import Search from './Search';
 import Profile from './Profile';
 
 class Spoors extends Component {
@@ -41,6 +42,10 @@ class Spoors extends Component {
         return (
           <Explore {...props} />
         );
+      case 'search':
+        return (
+          <Search {...props} />
+        )
       case 'profile':
         return (
           <Profile {...props} />
