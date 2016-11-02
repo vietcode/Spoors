@@ -2,6 +2,8 @@
 
 A collaborative project to develop a unified mobile app for "Phượt thủ" - the term for travelers (not tourists) in Vietnam. This will be the go-to app in every traveler's pocket that can capture every moments of their trips, while providing features to keep them safe on the road.
 
+[[https://github.com/vietcode/Spoors/blob/master/docs/screenshots/spoors-20161102T180500.gif|alt=Spoors screenshot as of 2016/11/02]]
+
 ## Features
 
 - [ ] Display map with all nearby trips and travelers.
