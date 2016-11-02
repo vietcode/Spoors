@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import ApolloClient, { createNetworkInterface } from 'apollo-client';
+import ApolloClient, { createNetworkInterface, addTypename } from 'apollo-client';
 import ApolloProvider from 'react-apollo/ApolloProvider';
 
 import reducers from './reducers';
@@ -20,7 +20,16 @@ import Spoors from './containers/Spoors';
 const networkInterface = createNetworkInterface('/api');
 
 const client = new ApolloClient({
-  networkInterface
+  networkInterface,
+  // Apollo transformer to automatically add `__typename` to all queries.
+  queryTransformer: addTypename,
+  // Normalize ID for different object types for Apollo caching.
+  dataIdFromObject: (result) => {
+    if (result.id && result.__typename) {
+      return result.__typename + result.id;
+    }
+    return null;
+  }
 });
 
 // We use our own Redux store, so we combine Apollo with it.
