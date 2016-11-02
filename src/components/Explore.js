@@ -41,22 +41,11 @@ const styles = StyleSheet.create({
 class ExploreScene extends Component {
   constructor(props) {
     super(props);
-    this._openSearch = this._openSearch.bind(this);
     this._openProfile = this._openProfile.bind(this);
 
     this.state = {
 
     };
-  }
-
-  _openSearch(_event) {
-    this.props.handleNavigate({
-      type: 'push',
-      route: {
-        key: 'search',
-        title: 'Search'
-      }
-    });
   }
 
   _openProfile(_event) {
@@ -82,16 +71,6 @@ class ExploreScene extends Component {
     return(
       <View style={ styles.container }>
         <Map />
-
-        <View style={ styles.header }>
-
-          <SearchBar
-            leftButton={ menu }
-            onChangeText={(text) => this.setState({text})}
-            onFocus={this._openSearch}
-            value={this.state.text}
-          />
-        </View>
 
         <View style={ styles.footer }>
           <Avatar 

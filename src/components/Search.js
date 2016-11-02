@@ -8,29 +8,28 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import Geocoder from 'react-native-geocoder';
-
-Geocoder.fallbackToGoogle('AIzaSyCn-tBq6mf4YLayRZPfbh2egqV3GHVX9hQ');
-
 import SearchBar from './SearchBar';
 import Button from './Button';
+
+import { APPBAR_HEIGHT, STATUSBAR_HEIGHT } from '../constants/Theme';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    padding: 10
+    padding: 10,
+    paddingTop: APPBAR_HEIGHT + STATUSBAR_HEIGHT
   },
-  header: {
-    marginTop: 20,
-    backgroundColor: 'white'
+  card: {
+    padding: 20,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'gray',
+    marginBottom: 16,
   },
   suggestions: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    padding: 20,
-    borderWidth: 1,
-    borderColor: 'gray'
+    marginTop: 16
   },
   button: {
     color: 'white',
@@ -63,7 +62,6 @@ class Suggestion extends Component {
 class SearchScene extends Component {
   constructor(props) {
     super(props);
-    this._geocode = this._geocode.bind(this);
     this._renderLocation = this._renderLocation.bind(this);
 
     const ds = new ListView.DataSource({
@@ -75,36 +73,6 @@ class SearchScene extends Component {
       count: 0,
       error: null
     }
-  }
-
-  _geocode(address) {
-    const component = this;
-    const { dataSource } = this.state;
-
-    if (!address) {
-      component.setState({
-        dataSource: dataSource.cloneWithRows([]),
-        count: 0
-      });
-    };
-
-    Geocoder.geocodeAddress(address).then(res => {
-      component.setState({
-        count: res.length,
-        dataSource: dataSource.cloneWithRows(res)
-      });
-    })
-    .catch(err => {
-      component.setState({
-        error: err
-      })
-    });
-  }
-
-  _renderBackButton() {
-    return (
-      <Button onPress={ this.props.goBack }><Icon name="arrow-back" size={ 20 } /></Button>
-    );
   }
 
   /**
@@ -132,33 +100,24 @@ class SearchScene extends Component {
   }
 
   render() {
-    const { goBack } = this.props;
-    let { dataSource, count } = this.state; 
+    const { geocoder } = this.props;
+    let { dataSource, count } = this.state;
+    const { places } = geocoder;
 
     return (
       <View style={ styles.container }>
-        <View style={ styles.header }>
-
-          <SearchBar
-            leftButton={ this._renderBackButton() }
-            onChangeText={ this._geocode }
-            autoFocus={ true }
-            clearButtonMode="while-editing"
-          />
-        </View>
-
-        <View style={ styles.suggestions }>
+        <View style={ [styles.card, styles.suggestions] }>
           <Suggestion icon="restaurant-menu" text="Restaurant" />
           <Suggestion icon="local-gas-station" text="Gas Station" />
           <Suggestion icon="local-atm" text="ATM" />
           <Suggestion icon="expand-more" text="More"/>
         </View>
 
-        <View style={ styles.list }>
-          <Text>{count} results</Text>
+        <View style={ [styles.card, styles.list] }>
+          <Text>{places.length} results</Text>
 
           <ListView
-            dataSource={ dataSource }
+            dataSource={ dataSource.cloneWithRows(places) }
             renderRow={ this._renderLocation }
           />
           </View>
@@ -170,7 +129,8 @@ class SearchScene extends Component {
 
 SearchScene.propTypes = {
   handleNavigate: PropTypes.func.isRequired,
-  goBack: PropTypes.func.isRequired
+  goBack: PropTypes.func.isRequired,
+  geocoder: PropTypes.object.isRequired
 }
 
 export default SearchScene;

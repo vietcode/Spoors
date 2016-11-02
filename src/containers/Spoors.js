@@ -15,7 +15,7 @@ function mapStateToProps (state) {
         level: 13
       }
     }
-   }
+  }
 }
 
 function mapDispatchToProps (dispatch) {

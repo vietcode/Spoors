@@ -5,16 +5,21 @@ import {
 } from 'react-native';
 
 const {
-  CardStack: NavigationCardStack
+  CardStack: NavigationCardStack,
+  Header: NavigationHeader,
+  PropTypes: NavigationPropTypes
 } = NavigationExperimental;
 
+import SearchBar from '../containers/SearchBar';
 import Explore from './Explore';
-import Search from './Search';
+import Search from '../containers/Search';
 import Profile from './Profile';
 
 class Spoors extends Component {
   constructor(props) {
     super(props);
+    this._renderHeader = this._renderHeader.bind(this);
+    this._renderHeader = this._renderHeader.bind(this);
     this._renderScene = this._renderScene.bind(this);
     this._handleBackAction = this._handleBackAction.bind(this);
     this._handleNavigate = this._handleNavigate.bind(this);
@@ -74,13 +79,37 @@ class Spoors extends Component {
     }
   }
 
-  render() {
-    return(
+  _renderHeader(sceneProps) {
+    const { route } = sceneProps.scene;
+
+    const props = {
+      handleNavigate: this._handleNavigate,
+      goBack: this._handleBackAction
+    }
+
+    // We only want to have the search header on the map and search scenes.
+    if (route.key != 'explore' && route.key != 'search') {
+      return null;
+    }
+
+    return (
+      <SearchBar
+        placeholder="Places, restaurants, hotels..."
+        {...props} 
+      />
+    );
+  }
+
+  render() : ReactElement<any> {
+
+    return (
       <NavigationCardStack
         direction='vertical'
-        navigationState={this.props.navigation}
-        onNavigate={this._handleNavigate}
-        renderScene={this._renderScene} />
+        navigationState={ this.props.navigation }
+        onNavigate={ this._handleNavigate }
+        renderHeader={ this._renderHeader }
+        renderScene={ this._renderScene }
+      />
     );
   }
 }

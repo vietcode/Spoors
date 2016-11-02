@@ -1,2 +1,6 @@
 export const PUSH_ROUTE = 'PUSH_ROUTE';
 export const POP_ROUTE = 'POP_ROUTE';
+
+export const GEOCODE_PENDING = 'GEOCODE_PENDING';
+export const GEOCODE_FULFILLED = 'GEOCODE_FULFILLED';
+export const GEOCODE_REJECTED = 'GEOCODE_REJECTED';
