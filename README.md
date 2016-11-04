@@ -58,3 +58,21 @@ A **reducer** is a function that takes the current state, and the *action*, and 
 - Clone this repository.
 - Run `npm install` to install all dependencies.
 - `react-native run-ios` or `react-native run-android`.
+
+### Notes
+
+`react-native-maps@0.11.0` did not have the patch for old iOS version so it would not run. To remedy it until newer version is released, modify `node_modules/react-native-maps/ios/AirMaps/Callout/SMCalloutView.h` and replace:
+
+```obj-c
+@interface SMCalloutView : UIView <CAAnimationDelegate>
+```
+ 
+ with
+
+ ```obj-c
+ #if __IPHONE_OS_VERSION_MAX_ALLOWED < 100000
+@interface SMCalloutView : UIView
+#else
+@interface SMCalloutView : UIView <CAAnimationDelegate>
+#endif
+```
