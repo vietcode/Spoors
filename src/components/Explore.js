@@ -8,6 +8,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Map from './Map';
+import Marker from './Map/Marker';
 import Button from './Button';
 import Avatar from './Button/Avatar';
 import SearchBar from './SearchBar';
@@ -36,7 +37,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10
   },
+  travelModes: {
+    flexDirection: 'row'
+  }
 });
+
+const TRAVEL_MODES = [
+  'directions-walk',
+  'directions-bike',
+  'motorcycle',
+  'directions-car',
+  'local-taxi',
+  'train',
+  'flight'
+]
 
 class ExploreScene extends Component {
   constructor(props) {
@@ -44,7 +58,6 @@ class ExploreScene extends Component {
     this._openProfile = this._openProfile.bind(this);
 
     this.state = {
-
     };
   }
 
@@ -64,13 +77,45 @@ class ExploreScene extends Component {
     );
   }
 
+  _renderPOI(marker) {
+    // if (!marker) return null;
+
+    let style = {}, active = true;
+
+    if (!marker) {
+      marker = { position: { latitude: 0, longitude: 0} };
+      active = false;
+      style.width = 0;
+      style.height = 0;
+    }
+
+    return (
+      <Marker icon="add-location" 
+              position={ marker.position }
+              title={ marker.formattedAddress }
+              active={ active }
+              style={ style }
+      >
+        <View style={ styles.travelModes }>
+          { TRAVEL_MODES.map((mode) => 
+            <Button key={ mode }><Icon name={ mode } size={ 30 } /></Button>
+          )}
+        </View>
+      </Marker>
+    );
+  }
+
   render() {
-    let { viewer } = this.props;
+    let { viewer, selectedMarker, waypoints } = this.props;
     const menu = this._renderMenu();
 
     return(
       <View style={ styles.container }>
-        <Map />
+        <Map center={ viewer.position } zoom={ 4 }>
+          <Marker icon="motorcycle" size={30} position={ viewer.position } />
+
+          { this._renderPOI(selectedMarker) }
+        </Map>
 
         <View style={ styles.footer }>
           <Avatar 
@@ -90,6 +135,8 @@ class ExploreScene extends Component {
 
 ExploreScene.propTypes = {
   viewer: PropTypes.object.isRequired, // Passed down by parent.
+  waypoints: PropTypes.array.isRequired,
+  selectedMarker: PropTypes.object,
   handleNavigate: PropTypes.func.isRequired,
   goBack: PropTypes.func.isRequired
 }

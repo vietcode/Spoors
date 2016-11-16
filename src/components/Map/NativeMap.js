@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PureComponent, PropTypes } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -10,6 +10,8 @@ import MapView, { Marker } from 'react-native-maps';
 const MERCATOR_OFFSET = 268435456;
 const MERCATOR_RADIUS = 85445659.44705395;
 const M_PI = Math.PI;
+
+const { width, height } = Dimensions.get('window');
 
 function longitudeToPixelSpaceX(longitude) {
   return Math.round(MERCATOR_OFFSET + MERCATOR_RADIUS * longitude * M_PI / 180.0);
@@ -24,7 +26,7 @@ function pixelSpaceYToLatitude(pixelY) {
   return (M_PI / 2.0 - 2.0 * Math.atan(Math.exp((Math.round(pixelY) - MERCATOR_OFFSET) / MERCATOR_RADIUS))) * 180.0 / M_PI;
 }
 
-function zoomLevelToCoordinateSpan(latitude, longitude, zoomLevel, mapWidth, mapHeight) {
+function zoomLevelToCoordinateSpan({longitude, latitude}, zoomLevel, {mapWidth, mapHeight}) {
   // convert center coordiate to pixel space
   let centerPixelX = longitudeToPixelSpaceX(longitude);
   let centerPixelY = latitudeToPixelSpaceY(latitude);
@@ -49,7 +51,6 @@ function zoomLevelToCoordinateSpan(latitude, longitude, zoomLevel, mapWidth, map
   return {latitudeDelta, longitudeDelta}
 }
 
-const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
 const LATITUDE = 10.3214142;
 const LONGITUDE = 107.0827768;
@@ -60,27 +61,10 @@ const styles = StyleSheet.create({
   }
 });
 
-class Map extends Component {
+class Map extends PureComponent {
   constructor(props) {
     super(props);
-    let { longitude, latitude, zoom } = props;
-    let { latitudeDelta, longitudeDelta } = zoomLevelToCoordinateSpan(latitude, 
-                                                                      longitude, 
-                                                                      zoom, 
-                                                                      width, 
-                                                                      height);
-
     this.state = {
-      region: {
-        latitude,
-        longitude,
-        latitudeDelta,
-        longitudeDelta
-      },
-      target: {
-        latitude,
-        longitude
-      },
       date: new Date()
     };
 
@@ -91,8 +75,27 @@ class Map extends Component {
     this.setState({ target: e.nativeEvent.coordinate });
   }
 
+  _renderLocation(location) {
+    const { position, formattedAddress } = location;
+    const { lat, lng } = position;
+
+    return (
+      <Marker key={ formattedAddress }
+              coordinate={ { latitude: lat, longitude: lng} }
+              title={ formattedAddress }
+              ref={ location.ref }
+      >
+
+      </Marker>
+    )
+  }
+
   render() {
-    let { region, target, date } = this.state;
+    const { center, zoom, children } = this.props;
+    const { date } = this.state;
+
+    const { latitudeDelta, longitudeDelta } = 
+              zoomLevelToCoordinateSpan(center, zoom, Dimensions.get('window'));
 
     if (Platform.OS === 'web') {
       return (
@@ -111,30 +114,18 @@ class Map extends Component {
     } else {
       return (
         <MapView style={styles.map}
-          region={region}
+          region={{ ...center, latitudeDelta, longitudeDelta }}
           showsTraffic={false}
           loadingEnabled={true}
-          showsUserLocation={true}
+          showsUserLocation={false}
           followsUserLocation={false}
           showsMyLocationButton={true}
           showsPointsOfInterest={true}
           showsCompass={true}
           showsScale={true}
+          rotateEnabled={false}
         >
-          
-          <Marker
-            coordinate={region}
-            pinColor="blue"
-          />
-
-          <Marker draggable
-            coordinate={ target }
-            onDragEnd={this.targetDropped}
-            description={`${target.latitude} - ${target.longitude}`}
-            pinColor="purple"
-          >
-          </Marker>
-
+          { children }
         </MapView>
       );
     }
@@ -142,14 +133,16 @@ class Map extends Component {
 }
 
 Map.propTypes = {
-  longitude: PropTypes.number.isRequired,
-  latitude: PropTypes.number.isRequired,
-  zoom: PropTypes.number.isRequired
+  center: PropTypes.shape({
+    longitude: PropTypes.number.isRequired,
+    latitude: PropTypes.number.isRequired
+  }),
+  zoom: PropTypes.number.isRequired,
+  pointOfInterest: PropTypes.object
 }
 
 Map.defaultProps = {
-  longitude: LONGITUDE,
-  latitude: LATITUDE,
+  center: { latitude: LATITUDE, longitude: LONGITUDE },
   zoom: 5
 }
 

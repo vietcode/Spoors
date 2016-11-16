@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 
 import Search from '../components/Search';
+import { viewLocation } from '../actions/searchActions';
 
 function mapStateToProps({ geocoder }) {
   return {
@@ -9,7 +10,11 @@ function mapStateToProps({ geocoder }) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    selectLocation: (location) => {
+      dispatch(viewLocation(location));
+    }
+  };
 }
 
 export default connect(

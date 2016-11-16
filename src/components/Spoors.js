@@ -11,7 +11,7 @@ const {
 } = NavigationExperimental;
 
 import SearchBar from '../containers/SearchBar';
-import Explore from './Explore';
+import Explore from '../containers/Map';
 import Search from '../containers/Search';
 import Profile from './Profile';
 
@@ -95,6 +95,7 @@ class Spoors extends Component {
     return (
       <SearchBar
         placeholder="Places, restaurants, hotels..."
+        route={ route }
         {...props} 
       />
     );

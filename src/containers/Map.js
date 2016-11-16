@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import { graphql } from 'react-apollo';
+import { graphql, compose } from 'react-apollo';
+import gql from 'graphql-tag';
 
 import Map from '../components/Explore';
 
@@ -63,10 +64,10 @@ const withNearestTrips = graphql(NEAREST_TRIPS_BY_LOCATION, {
 
 const MapWithData = withNearestTrips(Map);
 
-function mapStateToProps (state) {
+function mapStateToProps ({ map }) {
   return {
-    
-   }
+    ...map
+  }
 }
 
 function mapDispatchToProps (dispatch) {
@@ -75,7 +76,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MapWithData);
+export default compose(
+  // withNearestTrips,
+  connect(mapStateToProps, mapDispatchToProps)
+)(Map);

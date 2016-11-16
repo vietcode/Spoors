@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PureComponent, PropTypes } from 'react';
 import {
   StyleSheet,
   Text,
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   }
 });
 
-class Suggestion extends Component {
+class Suggestion extends PureComponent {
   render() {
     const { icon, text } = this.props;
 
@@ -59,7 +59,7 @@ class Suggestion extends Component {
   }
 }
 
-class SearchScene extends Component {
+class SearchScene extends PureComponent {
   constructor(props) {
     super(props);
     this._renderLocation = this._renderLocation.bind(this);
@@ -73,6 +73,12 @@ class SearchScene extends Component {
       count: 0,
       error: null
     }
+  }
+
+  _addLocation(location) {
+    const { selectLocation, goBack } = this.props;
+    selectLocation(location);
+    goBack();
   }
 
   /**
@@ -91,10 +97,11 @@ class SearchScene extends Component {
    * @param {String?} options.subLocality
    * @return {Component} React component to render
    */
-  _renderLocation({formattedAddress}) {
+  _renderLocation(location) {
+    const onPress = () => this._addLocation(location);
     return (
-      <Button style={ styles.listItem }>
-        { formattedAddress }
+      <Button style={ styles.listItem } onPress={ onPress }>
+        { location.formattedAddress }
       </Button>
     )
   }
@@ -117,6 +124,7 @@ class SearchScene extends Component {
           <Text>{places.length} results</Text>
 
           <ListView
+            enableEmptySections={ true }
             dataSource={ dataSource.cloneWithRows(places) }
             renderRow={ this._renderLocation }
           />
@@ -130,7 +138,8 @@ class SearchScene extends Component {
 SearchScene.propTypes = {
   handleNavigate: PropTypes.func.isRequired,
   goBack: PropTypes.func.isRequired,
-  geocoder: PropTypes.object.isRequired
+  geocoder: PropTypes.object.isRequired,
+  selectLocation: PropTypes.func.isRequired
 }
 
 export default SearchScene;

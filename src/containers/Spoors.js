@@ -13,7 +13,13 @@ function mapStateToProps (state) {
         name: "Son Tran-Nguyen",
         picture: "http://apriliauae.com/wp-content/uploads/2014/04/vespa-girl.jpg",
         level: 13
-      }
+      },
+      // @TODO: Retrieve current position of the viewer from GPS.
+      position: {
+        latitude: 10.321414,
+        longitude: 107.082777
+      },
+      pointOfInterest: state.pointOfInterest
     }
   }
 }

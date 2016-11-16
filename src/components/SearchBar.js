@@ -96,11 +96,10 @@ class SearchBar extends Component {
   }
 
   render() {
-    const { active } = this.state;
     const props = this.props;
-    const {style, children, geocode, ...other} = props;
+    const {style, children, geocode, route, ...other} = props;
 
-    const leftButton = active? this._renderBackButton() : this._renderMenu();
+    const leftButton = route.key !== 'explore'? this._renderBackButton() : this._renderMenu();
 
     return (
       <View style={ [styles.container, style] }>
@@ -124,6 +123,10 @@ class SearchBar extends Component {
 
 SearchBar.propTypes = {
   geocode: PropTypes.func.isRequired, // Passed down by Redux container from its dispatch.
+  route: PropTypes.shape({
+    key: PropTypes.string,
+    title: PropTypes.string
+  })
 }
 
 export default SearchBar;

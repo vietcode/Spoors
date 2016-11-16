@@ -1,7 +1,8 @@
 import { 
   GEOCODE_PENDING, 
   GEOCODE_FULFILLED, 
-  GEOCODE_REJECTED 
+  GEOCODE_REJECTED,
+  VIEW_LOCATION
 } from '../constants/ActionTypes';
 
 export function geocoding(address) {
@@ -16,7 +17,16 @@ export function geocoded(address, places) {
     type: GEOCODE_FULFILLED,
     payload: {
       address,
-      places
+      places: places.map((place) => {
+        const { position, ...rest } = place;
+        return {
+          position: {
+            latitude: position.lat,
+            longitude: position.lng
+          },
+          ...rest
+        };
+      })
     },
     error: false
   }
@@ -27,5 +37,12 @@ export function failedGeocoding(error) {
     type: GEOCODE_REJECTED,
     payload: error,
     error: true
+  }
+}
+
+export function viewLocation(location) {
+  return {
+    type: VIEW_LOCATION,
+    payload: location
   }
 }
