@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Map from './Map';
 import Marker from './Map/Marker';
+import Route from './Map/Route';
 import Button from './Button';
 import Avatar from './Button/Avatar';
 import SearchBar from './SearchBar';
@@ -105,13 +106,27 @@ class ExploreScene extends Component {
     );
   }
 
+  _renderTrip(trip) {
+    return trip.routes.map((route) => (
+      <Route polyline={route.polyline} draggable={false} 
+          strokeWidth={ 2 }
+          strokeColor="#4497ff"
+        />
+    ));
+  }
+
   render() {
-    let { viewer, selectedMarker, waypoints } = this.props;
+    let { viewer, trips, selectedMarker, waypoints } = this.props;
     const menu = this._renderMenu();
 
     return(
       <View style={ styles.container }>
-        <Map center={ viewer.position } zoom={ 4 }>
+        <Map 
+          center={ viewer.position } 
+          zoom={ 4 }
+        >
+          {trips.map(this._renderTrip)}
+
           <Marker icon="motorcycle" size={30} position={ viewer.position } />
 
           { this._renderPOI(selectedMarker) }
@@ -135,6 +150,7 @@ class ExploreScene extends Component {
 
 ExploreScene.propTypes = {
   viewer: PropTypes.object.isRequired, // Passed down by parent.
+  trips: PropTypes.array.isRequired,
   waypoints: PropTypes.array.isRequired,
   selectedMarker: PropTypes.object,
   handleNavigate: PropTypes.func.isRequired,
