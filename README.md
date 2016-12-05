@@ -46,6 +46,10 @@ However, all of the above is only to provide dispatchers and global state based 
 
 A **reducer** is a function that takes the current state, and the *action*, and returns a new state. **NOTE**: It must returns a state, even if it's the same as the current state.
 
+## BYOB
+
+Bring your own backend.
+
 
 ## Resources
 
@@ -69,8 +73,8 @@ A **reducer** is a function that takes the current state, and the *action*, and 
  
  with
 
- ```obj-c
- #if __IPHONE_OS_VERSION_MAX_ALLOWED < 100000
+```obj-c
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 100000
 @interface SMCalloutView : UIView
 #else
 @interface SMCalloutView : UIView <CAAnimationDelegate>
