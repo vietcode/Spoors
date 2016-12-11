@@ -117,13 +117,14 @@ class Map extends PureComponent {
           region={{ ...center, latitudeDelta, longitudeDelta }}
           showsTraffic={false}
           loadingEnabled={true}
-          showsUserLocation={false}
-          followsUserLocation={false}
+          showsUserLocation={true}
+          followsUserLocation={true}
           showsMyLocationButton={true}
           showsPointsOfInterest={true}
           showsCompass={true}
           showsScale={true}
-          rotateEnabled={false}
+          rotateEnabled={true}
+          ref={ref => { this.map = ref; }}
         >
           { children }
         </MapView>

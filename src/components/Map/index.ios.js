@@ -1,3 +1,3 @@
-import Map from './NativeMap';
+import Map from './Mapbox';
 
 export default Map;

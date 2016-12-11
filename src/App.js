@@ -11,7 +11,7 @@ import {
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import ApolloClient, { createNetworkInterface, addTypename } from 'apollo-client';
-import ApolloProvider from 'react-apollo/ApolloProvider';
+import { ApolloProvider } from 'react-apollo';
 
 import reducers from './reducers';
 // App container that provides navigation props and viewer data.

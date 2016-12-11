@@ -2,32 +2,30 @@
   "name": "Spoors",
   "version": "0.0.1",
   "private": true,
-  "devDependencies": {
-    "react-scripts": "^0.6.1"
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
   },
   "dependencies": {
-    "apollo-client": "^0.5",
+    "apollo-client": "^0.5.18",
     "immutable": "^3.8.1",
+    "native-base": "^0.5.18",
     "polyline": "^0.2.0",
-    "react": "^15.4.1",
-    "react-apollo": "^0.6.0",
-    "react-dom": "^15.4.1",
-    "react-native": "^0.39.0",
+    "react": "15.4.1",
+    "react-apollo": "^0.7.1",
+    "react-native": "0.39.1",
     "react-native-geocoder": "^0.4.5",
-    "react-native-maps": "^0.11.0",
-    "react-native-vector-icons": "^3.0.0",
-    "react-native-web": "0.0.55",
+    "react-native-mapbox-gl": "^5.1.0",
     "react-redux": "^4.4.6",
     "redux": "^3.6.0"
   },
-  "scripts": {
-    "// start": "node node_modules/react-native/local-cli/cli.js start",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "startrn": "node ./scripts/startrn.js",
-    "android:pkg:build": "cd android && ./gradlew assembleRelease",
-    "android:pkg:install": "adb install android/app/build/outputs/apk/app-release.apk"
+  "devDependencies": {
+    "babel-jest": "17.0.2",
+    "babel-preset-react-native": "1.9.0",
+    "jest": "17.0.3",
+    "react-test-renderer": "15.4.1"
+  },
+  "jest": {
+    "preset": "react-native"
   }
 }

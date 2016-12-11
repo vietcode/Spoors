@@ -8,8 +8,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Map from './Map';
-import Marker from './Map/Marker';
-import Route from './Map/Route';
+import Annotation from './Map/Annotation';
 import Button from './Button';
 import Avatar from './Button/Avatar';
 import SearchBar from './SearchBar';
@@ -90,9 +89,14 @@ class ExploreScene extends Component {
       style.height = 0;
     }
 
+    let {latitude, longitude} = marker.position;
+
     return (
-      <Marker icon="add-location" 
-              position={ marker.position }
+      <Annotation
+              id="poi"
+              type="point"
+              icon="add-location" 
+              coordinates={ [latitude, longitude] }
               title={ marker.formattedAddress }
               active={ active }
               style={ style }
@@ -102,14 +106,17 @@ class ExploreScene extends Component {
             <Button key={ mode }><Icon name={ mode } size={ 30 } /></Button>
           )}
         </View>
-      </Marker>
+      </Annotation>
     );
   }
 
   _renderTrip(trip) {
     return trip.routes.map((route) => (
-      <Route polyline={route.polyline} draggable={false} 
-          strokeWidth={ 2 }
+      <Annotation
+          id={ route.polyline }
+          type="polyline" 
+          coordinates={route.polyline}
+          strokeWidth={ 4 }
           strokeColor="#4497ff"
         />
     ));
@@ -123,11 +130,16 @@ class ExploreScene extends Component {
       <View style={ styles.container }>
         <Map 
           center={ viewer.position } 
-          zoom={ 4 }
+          zoom={ 8 }
         >
-          {trips.map(this._renderTrip)}
+          { trips.map(this._renderTrip) }
 
-          <Marker icon="motorcycle" size={30} position={ viewer.position } />
+          <Annotation
+            id="viewer"
+            type="point"
+            icon="motorcycle" 
+            size={30} 
+            coordinates={ [viewer.position.latitude, viewer.position.longitude] } />
 
           { this._renderPOI(selectedMarker) }
         </Map>
