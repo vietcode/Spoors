@@ -20,7 +20,7 @@ class Avatar extends Component {
     let {source, ...others} = this.props;
 
     return (
-      <Button style={ styles.container } {...others}>
+      <Button rounded transparent large style={ styles.container } {...others}>
         <Image
           style={ styles.image }
           source={{uri: source}}

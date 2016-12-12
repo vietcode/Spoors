@@ -37,7 +37,6 @@ class ProfileScene extends Component {
   }
 
   _openProfile(_event) {
-    alert('profile');
     this.props.handleNavigate({
       type: 'push',
       route: {
@@ -49,6 +48,10 @@ class ProfileScene extends Component {
 
   render() {
     const { viewer, goBack } = this.props;
+
+    const leftButton = viewer.user?
+      <Button vertical icon="log-out" transparent size={ 40 } large>log out</Button> :
+      <Button vertical icon="log-in" transparent size={ 40 } large>log in</Button>;
 
     return(
       <View style={ styles.container }>
@@ -69,16 +72,14 @@ class ProfileScene extends Component {
         </View>
 
         <View style={ styles.toolbar }>
-          <Button>
-            <Text>Left Menu</Text>
-          </Button>
+          { leftButton }
 
-          <Button onPress={goBack}>
-            <Text>Close</Text>
-          </Button>
+          <Button vertical icon="close-circle-outline" large
+                  transparent size={ 40 }
+                  onPress={goBack}>close</Button>
 
-          <Button>
-            <Text>Right Menu</Text>
+          <Button vertical icon="person-add" transparent large size={ 40 }>
+            register
           </Button>
         </View>
       </View>

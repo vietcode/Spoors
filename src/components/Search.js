@@ -51,8 +51,7 @@ class Suggestion extends PureComponent {
 
     return (
       <View>
-        <Button rounded={true} style={ styles.button }>
-          <Icon name={ icon } size={20} />
+        <Button info rounded icon={ icon }>
         </Button>
       </View>
     );
@@ -114,7 +113,7 @@ class SearchScene extends PureComponent {
     return (
       <View style={ styles.container }>
         <View style={ [styles.card, styles.suggestions] }>
-          <Suggestion icon="restaurant-menu" text="Restaurant" />
+          <Suggestion icon="restaurant" text="Restaurant" />
           <Suggestion icon="local-gas-station" text="Gas Station" />
           <Suggestion icon="local-atm" text="ATM" />
           <Suggestion icon="expand-more" text="More"/>

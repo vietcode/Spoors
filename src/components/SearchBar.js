@@ -81,17 +81,16 @@ class SearchBar extends Component {
 
   _renderMenu() {
     return (
-      <Button style={ styles.button }>
-        <Icon name="menu" style={ styles.icon }/>
-      </Button>
+      <Button icon="menu"
+        style={ styles.button } transparent />
     );
   }
 
   _renderBackButton() {
     return (
-      <Button onPress={ this.cancel } style={ styles.button }>
-        <Icon name="navigate-before" style={ styles.icon } />
-      </Button>
+      <Button icon="arrow-back"
+        style={ styles.button } transparent
+        onPress={ this.cancel } />
     );
   }
 
@@ -113,9 +112,9 @@ class SearchBar extends Component {
           onChangeText={ geocode }
           {...other}
         />
-        <Button style={ styles.button }>
-          <Icon name="map" style={ styles.icon } />
-        </Button>
+        <Button icon="map"
+          style={ styles.button } transparent
+        />
       </View>
     )
   }

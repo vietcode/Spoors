@@ -1,11 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import {
+  Platform,
   StyleSheet,
   Text,
   View
 } from 'react-native';
-
-import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import Map from './Map';
 import Annotation from './Map/Annotation';
@@ -73,7 +72,7 @@ class ExploreScene extends Component {
 
   _renderMenu() {
     return (
-      <Button><Icon name="menu" size={ 20 } /></Button>
+      <Button icon="menu" transparent size={ 35 } large vertical>menu</Button>
     );
   }
 
@@ -103,7 +102,7 @@ class ExploreScene extends Component {
       >
         <View style={ styles.travelModes }>
           { TRAVEL_MODES.map((mode) => 
-            <Button key={ mode }><Icon name={ mode } size={ 30 } /></Button>
+            <Button key={ mode } icon={ mode } size={ 30 } />
           )}
         </View>
       </Annotation>
@@ -138,7 +137,7 @@ class ExploreScene extends Component {
             id="viewer"
             type="point"
             icon="motorcycle" 
-            size={30} 
+            size={ 30 } 
             coordinates={ [viewer.position.latitude, viewer.position.longitude] } />
 
           { this._renderPOI(selectedMarker) }
@@ -149,9 +148,7 @@ class ExploreScene extends Component {
             source={ viewer.user.picture }
             onPress={ this._openProfile } />
 
-          <Button>
-            <Text>Navigate</Text>
-          </Button>
+          <Button vertical icon="radio-button-on" transparent size={ 50 } large color="#ff0000">start</Button>
 
           { menu }
         </View>

@@ -1,35 +1,39 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet,
-  TouchableOpacity,
-  Text
+  Platform,
+  StyleSheet
 } from 'react-native';
+
+import { Fab, Button, Icon } from 'native-base';
 
 const styles = StyleSheet.create({
   button: {
-    flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center'
   }
 })
 
-class Button extends Component {
+class MyButton extends Component {
   render() {
-    let { 
-      children, style,
+    let {
+      icon,
+      size,
+      style,
+      children,
       ...other
     } = this.props;
 
-    return (
-      <TouchableOpacity
-        {...other}
-      >
-        <Text style={ [styles.button, style] }>
-          {children}
-        </Text>
-      </TouchableOpacity>
-    )
+    let button;
+    if (icon) {
+      return <Button {...other} style={[ styles.button, style]}>
+        <Icon name={ (Platform.OS === 'android'? 'md-' : 'ios-') + icon }
+          style={ {fontSize: size} }
+        />
+        { children || '' }
+      </Button>
+    } else {
+      return <Button {...other}>{ children || '' }</Button>
+    };
   }
 }
 
-export default Button;
+export default MyButton;
