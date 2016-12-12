@@ -144,11 +144,10 @@ class ExploreScene extends Component {
         </Map>
 
         <View style={ styles.footer }>
-          <Avatar 
-            source={ viewer.user.picture }
+          <Avatar source={ viewer.user }
             onPress={ this._openProfile } />
 
-          <Button vertical icon="radio-button-on" transparent size={ 50 } large color="#ff0000">start</Button>
+          <Button vertical icon="radio-button-on" transparent size={ 50 } large color="#5067FF">start</Button>
 
           { menu }
         </View>
