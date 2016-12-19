@@ -63,6 +63,14 @@ Bring your own backend.
 - Run `npm install` to install all dependencies.
 - `react-native run-ios` or `react-native run-android`.
 
+## Upgrades
+
+- `react-native upgrade`.
+- Choose `y` for all files.
+- `react-native link`
+- `react-native link react-native-vector-icons`
+- Follow instructions at https://github.com/mapbox/react-native-mapbox-gl/blob/master/ios/install.md 
+
 ### Notes
 
 `react-native-maps@0.11.0` did not have the patch for old iOS version so it would not run. To remedy it until newer version is released, modify `node_modules/react-native-maps/ios/AirMaps/Callout/SMCalloutView.h` and replace:
