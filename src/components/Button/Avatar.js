@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
   StyleSheet,
   Image,
   Text,
   View
 } from 'react-native';
+import ProgressBar from 'react-native-progress/Bar';
+
 import Button from './index';
 
 const styles = StyleSheet.create({
@@ -15,10 +17,13 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25
+  },
+  name: {
+    fontSize: 10
   }
 });
 
-class Avatar extends Component {
+class Avatar extends PureComponent {
   render() {
     let {source, ...others} = this.props;
 
@@ -33,7 +38,12 @@ class Avatar extends Component {
         {...others}>
         <View style={ styles.container }>
           { image }
-          <Text>{ name }</Text>
+          <ProgressBar
+            width={75}
+            height={4}
+            progress={ source.progress }
+          />
+          <Text style={ styles.name }>{ source.name }</Text>
         </View>
       </Button>
     )

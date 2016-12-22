@@ -14,20 +14,15 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: APPBAR_HEIGHT,
     marginTop: STATUSBAR_HEIGHT,
     backgroundColor: 'white',
-    borderRadius: 3,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'gray',
+    borderRadius: 5,
     position: 'absolute',
     top: 0,
     left: 10,
     right: 10,
   },
   button: {
-    paddingLeft: 15,
-    paddingRight: 15,
   },
   icon: {
     fontSize: 25,
@@ -39,6 +34,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     paddingLeft: 10,
     paddingRight: 10,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'gray',
+    borderRadius: 2,
+    marginTop: 5,
+    marginBottom: 5
   }
 })
 

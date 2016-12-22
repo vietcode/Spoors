@@ -12,7 +12,8 @@ function mapStateToProps (state) {
       user: {
         name: "Son Tran-Nguyen",
         picture: "http://apriliauae.com/wp-content/uploads/2014/04/vespa-girl.jpg",
-        level: 13
+        level: 13,
+        progress: 0.75
       },
       // @TODO: Retrieve current position of the viewer from GPS.
       position: {

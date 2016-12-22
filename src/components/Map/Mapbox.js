@@ -40,6 +40,7 @@ class Map extends PureComponent {
     // Until this Mapbox library supports annotation view, we do this:
     const annotations = Children.map(children, (child) => {
       let { children, coordinates, ...rest } = child.props;
+      if (!coordinates) return null;
       if (typeof(coordinates) === "string") {
         coordinates = decode(coordinates);
       }

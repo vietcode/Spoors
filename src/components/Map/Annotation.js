@@ -9,6 +9,8 @@ class Annotation extends PureComponent {
 
   render() {
     let { coordinates, ...rest } = this.props;
+    if (!coordinates) return null;
+    
     if (typeof(coordinates) === "string") {
       coordinates = decode(coordinates);
     }

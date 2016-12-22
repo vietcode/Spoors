@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Children } from 'react';
 import {
   Platform,
   StyleSheet
 } from 'react-native';
 
-import { Fab, Button, Icon } from 'native-base';
+import { Fab, Button as NBButton, Icon } from 'native-base';
+import _ from 'lodash';
 
 const styles = StyleSheet.create({
   button: {
@@ -12,28 +13,68 @@ const styles = StyleSheet.create({
   }
 })
 
-class MyButton extends Component {
+class Button extends Component {
   render() {
     let {
       icon,
       size,
       style,
+      position,
       children,
       ...other
     } = this.props;
 
-    let button;
+    let newChildren = [], hasButtons = false;
+    let buttonStyles = [ styles.button, style ];
+
     if (icon) {
-      return <Button {...other} style={[ styles.button, style]}>
-        <Icon name={ (Platform.OS === 'android'? 'md-' : 'ios-') + icon }
-          style={ {fontSize: size} }
-        />
-        { children || '' }
-      </Button>
-    } else {
-      return <Button {...other}>{ children || '' }</Button>
-    };
+      let iconName = (Platform.OS === 'android'? 'md-' : 'ios-') + icon;
+      icon = (<Icon name={ iconName }
+        style={ {fontSize: size} } key={'icon-' + iconName}
+      />);
+      newChildren.push(icon);
+    }
+
+    Children.forEach(children, (child, index) => {
+      if (child.type && child.type.displayName == "Button") {
+        newChildren.push(<NBButton {...child.props} key={ index }></NBButton>);
+        hasButtons = true;
+      }
+    })
+
+    if (hasButtons) {
+      let containerStyle = {
+      };
+      if (position === 'bottomMiddle') {
+        position = 'bottomRight';
+        containerStyle.left = 20;
+        containerStyle.right = 20;
+      }
+
+      return (
+        <Fab active={ true } direction="up" position={ position } 
+              containerStyle={ containerStyle }
+              {...other} style={ buttonStyles }
+        >
+          { newChildren }
+        </Fab>
+
+      );
+    }
+
+    Children.forEach(children, (child, index) => {
+      newChildren.push(child);
+    });
+    if (newChildren.length === 1) {
+      newChildren = newChildren[0];
+    }
+
+    return (
+      <NBButton {...other} style={ buttonStyles }>
+        { newChildren }
+      </NBButton>
+    );
   }
 }
 
-export default MyButton;
+export default Button;

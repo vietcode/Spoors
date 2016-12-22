@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import {
   BackAndroid,
-  NavigationExperimental
+  NavigationExperimental,
+  StyleSheet
 } from 'react-native';
 
 const {
@@ -94,7 +95,7 @@ class Spoors extends Component {
 
     return (
       <SearchBar
-        placeholder="Places, restaurants, hotels..."
+        placeholder="Try places, restaurants, hotels..."
         route={ route }
         {...props} 
       />
@@ -102,14 +103,23 @@ class Spoors extends Component {
   }
 
   render() : ReactElement<any> {
+    const { navigation } = this.props;
+    const route = navigation.routes[navigation.index];
 
+    let cardStyle = {
+      backgroundColor: 'transparent'
+    };
+
+    // @TODO: Change direction based on scene.
     return (
       <NavigationCardStack
         direction='vertical'
         navigationState={ this.props.navigation }
-        onNavigate={ this._handleNavigate }
         renderHeader={ this._renderHeader }
         renderScene={ this._renderScene }
+        enableGestures={ true }
+        style={{  }}
+        cardStyle={ cardStyle }
       />
     );
   }
@@ -121,5 +131,12 @@ Spoors.propTypes = {
   popRoute: PropTypes.func.isRequired, // Passed down by Redux container from its dispatch.
   viewer: PropTypes.object.isRequired // Passed down by Redux container from GraphQL client.
 }
+
+const styles = StyleSheet.create({
+  modal: {
+    backgroundColor: 'transparent',
+    top: undefined
+  }
+});
 
 export default Spoors;

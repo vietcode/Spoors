@@ -53,13 +53,14 @@ class ProfileScene extends Component {
       <Button vertical icon="log-out" transparent size={ 40 } large>log out</Button> :
       <Button vertical icon="log-in" transparent size={ 40 } large>log in</Button>;
 
+    const image = viewer.user? <Image
+            style={ styles.image }
+            source={ {uri: viewer.user.picture} } /> : null;
+
     return(
       <View style={ styles.container }>
         <View style={ styles.content }>
-          <Image
-            style={ styles.image }
-            source={ {uri: viewer.user.picture} }
-          />
+          { image }
 
           <View style={{ alignItems: 'center', borderBottomWidth: StyleSheet.hairlineWidth}}>
             <Text>{ viewer.user.name }</Text>

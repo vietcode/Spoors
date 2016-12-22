@@ -10,12 +10,13 @@ import Map from './Map';
 import Annotation from './Map/Annotation';
 import Button from './Button';
 import Avatar from './Button/Avatar';
+import ActionModal from './Modal/ActionModal';
 import SearchBar from './SearchBar';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF'
+    backgroundColor: 'transparent'
   },
   map: {
     flexDirection:'row'
@@ -38,6 +39,12 @@ const styles = StyleSheet.create({
   },
   travelModes: {
     flexDirection: 'row'
+  },
+  sightings: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    borderRadius: 5,
+    height: 30,
+    width: 100
   }
 });
 
@@ -55,8 +62,12 @@ class ExploreScene extends Component {
   constructor(props) {
     super(props);
     this._openProfile = this._openProfile.bind(this);
+    this._openSightings = this._openSightings.bind(this);
+    this._openModal = this._openModal.bind(this);
+    this._closeModal = this._closeModal.bind(this);
 
     this.state = {
+      modal: null
     };
   }
 
@@ -66,6 +77,25 @@ class ExploreScene extends Component {
       route: {
         key: 'profile',
         title: 'Profile'
+      }
+    });
+  }
+
+  _openModal(modal) {
+    this.setState({modal: modal});
+  }
+
+  _closeModal() {
+    this.setState({modal: null});
+  }
+
+  _openSightings(_event) {
+    this.props.handleNavigate({
+      type: 'push',
+      route: {
+        key: 'sightings',
+        title: 'Sightings',
+        type: 'modal'
       }
     });
   }
@@ -121,7 +151,7 @@ class ExploreScene extends Component {
     ));
   }
 
-  render() {
+  render() : ReactElement<any> {
     let { viewer, trips, selectedMarker, waypoints } = this.props;
     const menu = this._renderMenu();
 
@@ -147,9 +177,15 @@ class ExploreScene extends Component {
           <Avatar source={ viewer.user }
             onPress={ this._openProfile } />
 
-          <Button vertical icon="radio-button-on" transparent size={ 50 } large color="#5067FF">start</Button>
+          <ActionModal icon="paw" color="#3d8af7">
+            <Button transparent vertical icon="camera">photo</Button>
+            <Button transparent vertical icon="mic">audio</Button>
+            <Button transparent vertical icon="radio-button-on">record</Button>
+          </ActionModal>
 
-          { menu }
+          <ActionModal style={ styles.sightings }>
+            <Text>Sightings</Text>
+          </ActionModal>
         </View>
       </View>
     );
