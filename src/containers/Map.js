@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
+import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
 
 import Map from '../components/Explore';
 
@@ -35,8 +36,6 @@ const withNearestTrips = graphql(NEAREST_TRIPS_BY_LOCATION, {
   },
 });
 
-const MapWithData = withNearestTrips(Map);
-
 function mapStateToProps ({ map }) {
   return {
     ...map
@@ -45,7 +44,6 @@ function mapStateToProps ({ map }) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    
   }
 }
 

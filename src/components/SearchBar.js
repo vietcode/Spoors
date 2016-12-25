@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PureComponent, PropTypes } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   }
 })
 
-class SearchBar extends Component {
+class SearchBar extends PureComponent {
   constructor(props) {
     super(props);
 

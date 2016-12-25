@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Spoors</string>
+    <string name="account_type">com.sntran.spoors.account</string>
+    <string name="content_authority">com.sntran.spoors.authority</string>
 </resources>

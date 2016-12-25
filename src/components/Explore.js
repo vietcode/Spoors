@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PureComponent, PropTypes } from 'react';
 import {
   Platform,
   StyleSheet,
@@ -58,13 +58,11 @@ const TRAVEL_MODES = [
   'flight'
 ]
 
-class ExploreScene extends Component {
+class ExploreScene extends PureComponent {
   constructor(props) {
     super(props);
     this._openProfile = this._openProfile.bind(this);
-    this._openSightings = this._openSightings.bind(this);
-    this._openModal = this._openModal.bind(this);
-    this._closeModal = this._closeModal.bind(this);
+    this._toggleGeolocation = this._toggleGeolocation.bind(this);
 
     this.state = {
       modal: null
@@ -81,23 +79,19 @@ class ExploreScene extends Component {
     });
   }
 
-  _openModal(modal) {
-    this.setState({modal: modal});
+  _toggleGeolocation(_event) {
+    this.props.toggleGeolocation();
   }
 
-  _closeModal() {
-    this.setState({modal: null});
-  }
-
-  _openSightings(_event) {
-    this.props.handleNavigate({
-      type: 'push',
-      route: {
-        key: 'sightings',
-        title: 'Sightings',
-        type: 'modal'
-      }
-    });
+  componentDidUpdate(prevProps, prevState) {
+    const lastPos = prevProps.viewer.position;
+    var newPos = this.props.viewer.position;
+    // if (!lastPos && newPos) {
+    //   this._map.easeTo({
+    //     ...newPos,
+    //     zoomLevel: 20
+    //   });
+    // }
   }
 
   _renderMenu() {
@@ -152,23 +146,27 @@ class ExploreScene extends Component {
   }
 
   render() : ReactElement<any> {
-    let { viewer, trips, selectedMarker, waypoints } = this.props;
+    let { viewer, trips, selectedMarker, waypoints, geolocating } = this.props;
     const menu = this._renderMenu();
-
-    return(
-      <View style={ styles.container }>
-        <Map 
-          center={ viewer.position } 
-          zoom={ 8 }
-        >
-          { trips.map(this._renderTrip) }
-
-          <Annotation
+    let rider = viewer.position? 
+        (<Annotation
             id="viewer"
             type="point"
             icon="motorcycle" 
             size={ 30 } 
             coordinates={ [viewer.position.latitude, viewer.position.longitude] } />
+        ) : null;
+
+    return(
+      <View style={ styles.container }>
+        <Map
+          mode="follow"
+          center={ viewer.position } 
+          zoom={ 8 }
+        >
+          { trips.map(this._renderTrip) }
+
+          { rider }
 
           { this._renderPOI(selectedMarker) }
         </Map>
@@ -179,8 +177,12 @@ class ExploreScene extends Component {
 
           <ActionModal icon="paw" color="#3d8af7">
             <Button transparent vertical icon="camera">photo</Button>
+            <Button transparent vertical icon="create">note</Button>
             <Button transparent vertical icon="mic">audio</Button>
-            <Button transparent vertical icon="radio-button-on">record</Button>
+            <Button transparent vertical 
+                    icon={geolocating? "radio-button-on" : "locate-outline"} 
+                    onPress={ this._toggleGeolocation }
+            >record</Button>
           </ActionModal>
 
           <ActionModal style={ styles.sightings }>
@@ -198,6 +200,8 @@ ExploreScene.propTypes = {
   waypoints: PropTypes.array.isRequired,
   selectedMarker: PropTypes.object,
   handleNavigate: PropTypes.func.isRequired,
+  toggleGeolocation: PropTypes.func.isRequired,
+  geolocating: PropTypes.bool,
   goBack: PropTypes.func.isRequired
 }
 

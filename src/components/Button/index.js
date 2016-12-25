@@ -1,4 +1,4 @@
-import React, { Component, Children } from 'react';
+import React, { PureComponent, Children } from 'react';
 import {
   Platform,
   StyleSheet
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   }
 })
 
-class Button extends Component {
+class Button extends PureComponent {
   render() {
     let {
       icon,

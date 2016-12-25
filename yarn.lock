@@ -3187,6 +3187,10 @@ react-native-mapbox-gl@^5.1.0:
     babel-eslint "^6.1.2"
     lodash "^4.13.1"
 
+react-native-mauron85-background-geolocation@^0.2.0-alpha.5:
+  version "0.2.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/react-native-mauron85-background-geolocation/-/react-native-mauron85-background-geolocation-0.2.0-alpha.5.tgz#2cb1bed06a9fe3cf54c52b96bceb427baf0e3555"
+
 react-native-progress@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/react-native-progress/-/react-native-progress-3.2.0.tgz#86d756be5537c09936ac3d3c4e23710da590743c"

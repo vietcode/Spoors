@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PureComponent, PropTypes } from 'react';
 import {
   StyleSheet,
   Text,
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class ProfileScene extends Component {
+class ProfileScene extends PureComponent {
   constructor(props) {
     super(props);
     this._openProfile = this._openProfile.bind(this);

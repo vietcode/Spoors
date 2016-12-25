@@ -1,4 +1,4 @@
-package com.spoors;
+package com.sntran.spoors;
 
 import com.facebook.react.ReactActivity;
 

@@ -2,11 +2,14 @@ import { connect } from 'react-redux';
 
 import App from '../components/Spoors';
 import { push, pop } from '../actions/navActions';
+import { toggle as toggleGeolocation, geolocate } from '../actions/geolocationActions';
 
 function mapStateToProps (state) {
   return {
     // `state.navigation` is from the reducer
     navigation: state.navigation,
+    // Geolocation status is set by reducer, triggered by this container's dispatch.
+    geolocating: state.geolocating,
     // @TODO: Make GraphQL query for viewer's user info.
     viewer: {
       user: {
@@ -15,11 +18,7 @@ function mapStateToProps (state) {
         level: 13,
         progress: 0.75
       },
-      // @TODO: Retrieve current position of the viewer from GPS.
-      position: {
-        latitude: 10.321414,
-        longitude: 107.082777
-      },
+      position: state.map.geolocation,
       pointOfInterest: state.pointOfInterest
     }
   }
@@ -28,7 +27,9 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     pushRoute: (route) => dispatch(push(route)),
-    popRoute: () => dispatch(pop())
+    popRoute: () => dispatch(pop()),
+    geolocate: (location) => dispatch(geolocate(location)),
+    geolocation: () => dispatch(toggleGeolocation())
   }
 }
 

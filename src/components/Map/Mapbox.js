@@ -33,12 +33,23 @@ class Map extends PureComponent {
     return hour > 17? Mapbox.mapStyles.dark : Mapbox.mapStyles.streets;
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    const { mode, center } = this.props;
+    if (mode === 'follow') {
+      this._map.easeTo({
+        ...center
+      })
+    }
+  }
+
   render() {
-    const { children } = this.props;
+    const { children, ...mapProps } = this.props;
     const { center, zoom, userTrackingMode } = this.state;
 
     // Until this Mapbox library supports annotation view, we do this:
     const annotations = Children.map(children, (child) => {
+      if (!child) return child;
+      
       let { children, coordinates, ...rest } = child.props;
       if (!coordinates) return null;
       if (typeof(coordinates) === "string") {
@@ -55,7 +66,7 @@ class Map extends PureComponent {
 
     return (
       <MapView
-        ref={map => { this._map = map; }}
+        ref={ map => { this._map = map; }}
         style={ styles.map }
         initialCenterCoordinate={ center }
         initialZoomLevel={ zoom }
@@ -70,6 +81,7 @@ class Map extends PureComponent {
         annotationsAreImmutable
         logoIsHidden={ true }
         attributionButtonIsHidden={ false }
+        {...mapProps}
       >
 
       </MapView>
