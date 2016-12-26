@@ -2389,6 +2389,10 @@ jsprim@^1.2.2:
     json-schema "0.2.3"
     verror "1.3.6"
 
+keymirror@0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/keymirror/-/keymirror-0.1.1.tgz#918889ea13f8d0a42e7c557250eee713adc95c35"
+
 kind-of@^3.0.2:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-3.1.0.tgz#475d698a5e49ff5e53d14e3e732429dc8bf4cf47"
@@ -3205,6 +3209,12 @@ react-native-vector-icons@2.x.x:
   dependencies:
     lodash "^4.0.0"
     yargs "^4.7.0"
+
+react-native-video@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/react-native-video/-/react-native-video-0.9.0.tgz#684f8fcc4e8ba6cd73226c70845bee8ee85a8b3b"
+  dependencies:
+    keymirror "0.1.1"
 
 react-native@^0.39.2:
   version "0.39.2"

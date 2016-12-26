@@ -20,6 +20,7 @@
     "react-native-mapbox-gl": "^5.1.0",
     "react-native-mauron85-background-geolocation": "^0.2.0-alpha.5",
     "react-native-progress": "^3.2.0",
+    "react-native-video": "^0.9.0",
     "react-redux": "^5.0.1",
     "redux": "^3.6.0"
   },
