@@ -6,6 +6,8 @@ import {
   View
 } from 'react-native';
 
+import GeoFencing from 'react-native-geo-fencing';
+
 import Map from '../components/Map';
 import Annotation from '../components/Map/Annotation';
 import Button from '../components/Button';

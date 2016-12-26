@@ -3178,6 +3178,10 @@ react-native-easy-grid@0.1.7:
   dependencies:
     lodash "^4.11.1"
 
+react-native-geo-fencing@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-geo-fencing/-/react-native-geo-fencing-0.1.0.tgz#0a04c2cdff9ff6d0091fbea89690fda7310be550"
+
 react-native-geocoder@^0.4.5:
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/react-native-geocoder/-/react-native-geocoder-0.4.5.tgz#bf2e11f6a68b1a1ff229206dd18429d86eeedaa2"

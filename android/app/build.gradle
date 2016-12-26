@@ -127,6 +127,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-geo-fencing')
     compile project(':react-native-video')
     compile project(':react-native-camera')
     compile project(':react-native-mauron85-background-geolocation')
