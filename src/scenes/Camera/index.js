@@ -3,6 +3,7 @@ import {
   Dimensions,
   StyleSheet,
   Image,
+  CameraRoll,
   StatusBar,
   TouchableOpacity,
   Text,
@@ -23,13 +24,14 @@ class CameraScene extends PureComponent {
     this.state = {
       camera: {
         aspect: Aspect.fill,
-        captureTarget: CaptureTarget.disk,
+        captureTarget: CaptureTarget.temp,
         type: Type.back,
         orientation: Orientation.auto,
         flashMode: FlashMode[props.flash || 'auto'],
         captureMode: CaptureMode[props.mode === 'video'? props.mode : 'still'] 
       },
-      isRecording: false
+      isRecording: false,
+      capturedMedia: null
     };
   }
 
@@ -75,7 +77,25 @@ class CameraScene extends PureComponent {
 
   preview = (data) => {
     const {path, width, height, duration, size} = data;
+    this.setState({
+      capturedMedia: path
+    });
+  }
 
+  undo = () => {
+    this.setState({
+      capturedMedia: null
+    });
+  }
+
+  save = () => {
+    const capturedMedia = this.state.capturedMedia;
+    CameraRoll.saveToCameraRoll(capturedMedia)
+    .then(() => {
+      this.setState({
+        capturedMedia: null
+      });
+    });
   }
 
   stopRecording = () => {
@@ -166,7 +186,7 @@ class CameraScene extends PureComponent {
   }
 
   render() {
-    const { camera, isRecording } = this.state;
+    const { camera, isRecording, capturedMedia } = this.state;
     const { aspect, captureTarget, type, flashMode, captureMode } = camera;
 
     let captureButton;
@@ -180,7 +200,6 @@ class CameraScene extends PureComponent {
           large transparent icon="square" rounded
           color="white"
           style={ styles.stopRecordingButton }
-          iconStyle={ { lineHeight: 45 }}
           onPress={ this.stopRecording } />
     } else {
       captureButton = <Button 
@@ -195,38 +214,64 @@ class CameraScene extends PureComponent {
           animated
           hidden
         />
-        <Camera            
-          ref={(cam) => {
-            this.camera = cam;
-          }}
-          style={styles.preview}
-          aspect={aspect}
-          captureTarget={captureTarget}
-          type={type}
-          flashMode={flashMode}
-          captureMode={ captureMode }
-          defaultTouchToFocus
-          mirrorImage={false}
-        />
-        <View style={[styles.overlay, styles.topOverlay]}>
-          <Button transparent icon="arrow-back" onPress={ this.props.goBack } />
-          <Button vertical transparent icon="flash"
-              onPress={ this.switchFlash }>
-            { this.flashMode }
-          </Button>
-        </View>
-        <View style={[styles.overlay, styles.bottomOverlay]}>
-          <Button large transparent icon={ this.captureModeIcon }
-              size={ 30 } color="white"
-              onPress={ this.switchCaptureMode } />
+        <View style={ styles.preview }>
+          <Camera            
+            ref={(cam) => {
+              this.camera = cam;
+            }}
+            style={styles.preview}
+            aspect={aspect}
+            captureTarget={captureTarget}
+            type={type}
+            flashMode={flashMode}
+            captureMode={ captureMode }
+            defaultTouchToFocus
+            mirrorImage={false}
+          />
+          <View style={[styles.overlay, styles.topOverlay]}>
+            <Button transparent icon="arrow-back" onPress={ this.props.goBack } />
+            <Button vertical transparent icon="flash"
+                onPress={ this.switchFlash }>
+              { this.flashMode }
+            </Button>
+          </View>
+          <View style={[styles.overlay, styles.bottomOverlay]}>
+            <Button large transparent icon={ this.captureModeIcon }
+                size={ 30 } color="white"
+                onPress={ this.switchCaptureMode } />
 
-          { captureButton }
+            { captureButton }
 
-          <Button 
-              large transparent icon="reverse-camera" 
-              size={ 30 } color="white"
-              onPress={ this.switchType } />
+            <Button 
+                large transparent icon="reverse-camera" 
+                size={ 30 } color="white"
+                onPress={ this.switchType } />
+          </View>
         </View>
+        
+        {
+          capturedMedia
+          &&
+          <View style={[styles.previewOverlay]}>
+            <View style={ styles.preview }>
+              <Image source={{uri: capturedMedia}} style={ styles.previewOverlay} />
+            </View>
+
+            <View style={[styles.overlay, styles.bottomOverlay]}>
+              <Button large transparent icon="undo"
+                  size={ 30 } color="white"
+                  onPress={ this.undo } />
+              <Button large transparent icon="checkmark-circle"
+                  size={ 50 } color="white"
+                  onPress={ this.save } />
+              <Button large transparent icon="close"
+                  color="white"
+                  onPress={ this.props.goBack } />
+            </View>
+          </View>
+          ||
+          null
+        }
       </View>
     );
   }
@@ -261,6 +306,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+  },
+  previewOverlay: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    flex: 1
   },
   bottomButton: {
     color: 'white'
