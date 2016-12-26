@@ -6,12 +6,12 @@ import {
   View
 } from 'react-native';
 
-import Map from './Map';
-import Annotation from './Map/Annotation';
-import Button from './Button';
-import Avatar from './Button/Avatar';
-import ActionModal from './Modal/ActionModal';
-import SearchBar from './SearchBar';
+import Map from '../components/Map';
+import Annotation from '../components/Map/Annotation';
+import Button from '../components/Button';
+import Avatar from '../components/Button/Avatar';
+import ActionModal from '../components/Modal/ActionModal';
+import SearchBar from '../components/SearchBar';
 
 const styles = StyleSheet.create({
   container: {
@@ -63,6 +63,7 @@ class ExploreScene extends PureComponent {
     super(props);
     this._openProfile = this._openProfile.bind(this);
     this._toggleGeolocation = this._toggleGeolocation.bind(this);
+    this.navigate = this.navigate.bind(this);
 
     this.state = {
       modal: null
@@ -92,6 +93,16 @@ class ExploreScene extends PureComponent {
     //     zoomLevel: 20
     //   });
     // }
+  }
+
+  navigate(scene) {
+    this.props.handleNavigate({
+      type: 'push',
+      route: {
+        key: scene.toLowerCase(),
+        title: scene
+      }
+    });
   }
 
   _renderMenu() {
@@ -176,9 +187,16 @@ class ExploreScene extends PureComponent {
             onPress={ this._openProfile } />
 
           <ActionModal icon="paw" color="#3d8af7">
-            <Button transparent vertical icon="camera">photo</Button>
-            <Button transparent vertical icon="create">note</Button>
-            <Button transparent vertical icon="mic">audio</Button>
+            <Button transparent vertical icon="camera" 
+                    onPress={ () => this.navigate('Camera') }
+            >photo</Button>
+
+            <Button transparent vertical icon="create"
+            >note</Button>
+
+            <Button transparent vertical icon="mic"
+            >audio</Button>
+            
             <Button transparent vertical 
                     icon={geolocating? "radio-button-on" : "locate-outline"} 
                     onPress={ this._toggleGeolocation }

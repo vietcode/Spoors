@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import Search from '../components/Search';
+import Search from '../scenes/Search';
 import { viewLocation } from '../actions/searchActions';
 
 function mapStateToProps({ geocoder }) {

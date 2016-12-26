@@ -19,6 +19,7 @@ class Button extends PureComponent {
       icon,
       size,
       style,
+      iconStyle,
       position,
       children,
       ...other
@@ -30,7 +31,7 @@ class Button extends PureComponent {
     if (icon) {
       let iconName = (Platform.OS === 'android'? 'md-' : 'ios-') + icon;
       icon = (<Icon name={ iconName }
-        style={ {fontSize: size} } key={'icon-' + iconName}
+        style={ {fontSize: size, ...iconStyle} } key={'icon-' + iconName}
       />);
       newChildren.push(icon);
     }

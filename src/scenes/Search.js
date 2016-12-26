@@ -8,8 +8,8 @@ import {
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import SearchBar from './SearchBar';
-import Button from './Button';
+import SearchBar from '../components/SearchBar';
+import Button from '../components/Button';
 
 import { APPBAR_HEIGHT, STATUSBAR_HEIGHT } from '../constants/Theme';
 

@@ -15,6 +15,7 @@
     "react": "15.4.1",
     "react-apollo": "^0.7.2",
     "react-native": "^0.39.2",
+    "react-native-camera": "https://github.com/lwansbrough/react-native-camera.git",
     "react-native-geocoder": "^0.4.5",
     "react-native-mapbox-gl": "^5.1.0",
     "react-native-mauron85-background-geolocation": "^0.2.0-alpha.5",

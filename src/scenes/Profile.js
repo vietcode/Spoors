@@ -6,9 +6,9 @@ import {
   Image
 } from 'react-native';
 
-import Map from './Map';
-import Button from './Button';
-import Avatar from './Button/Avatar';
+import Map from '../components/Map';
+import Button from '../components/Button';
+import Avatar from '../components/Button/Avatar';
 
 const styles = StyleSheet.create({
   container: {

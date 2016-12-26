@@ -3,7 +3,7 @@ import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
 import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
 
-import Map from '../components/Explore';
+import Map from '../scenes/Explore';
 
 import { NEAREST_TRIPS_BY_LOCATION } from '../queries';
 

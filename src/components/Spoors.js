@@ -14,7 +14,8 @@ const {
 import SearchBar from '../containers/SearchBar';
 import Explore from '../containers/Map';
 import Search from '../containers/Search';
-import Profile from './Profile';
+import Profile from '../scenes/Profile';
+import Camera from '../scenes/Camera';
 
 import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
 
@@ -122,6 +123,10 @@ class Spoors extends PureComponent {
       case 'profile':
         return (
           <Profile {...props} />
+        );
+      case 'camera':
+        return (
+          <Camera {...props} />
         );
       default:
         return null;

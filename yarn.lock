@@ -3160,6 +3160,10 @@ react-deep-force-update@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.0.1.tgz#f911b5be1d2a6fe387507dd6e9a767aa2924b4c7"
 
+"react-native-camera@https://github.com/lwansbrough/react-native-camera.git":
+  version "0.4.0"
+  resolved "https://github.com/lwansbrough/react-native-camera.git#bd40d8a4cf8f1609b111223e16b2d12346c3f7b7"
+
 react-native-checkbox@~1.0.8:
   version "1.0.17"
   resolved "https://registry.yarnpkg.com/react-native-checkbox/-/react-native-checkbox-1.0.17.tgz#94c61f190ef728c38763f48cd7ab91a6ad9fd4e2"
