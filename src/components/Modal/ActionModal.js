@@ -17,14 +17,14 @@ const styles = StyleSheet.create({
 class ActionModal extends Component {
   constructor(props) {
     super(props);
-    this._toggle = this._toggle.bind(this);
+    this.toggle = this.toggle.bind(this);
 
     this.state = {
       visible: false
     }
   }
 
-  _toggle(event) {
+  toggle(event) {
     this.setState({visible: !this.state.visible});
   }
 
@@ -44,16 +44,15 @@ class ActionModal extends Component {
             </View>
 
             <View style={ styles.actions }>
-              <Button transparent large icon="close" onPress={ this._toggle }></Button>
+              <Button transparent large icon="close" onPress={ this.toggle }></Button>
             </View>
           </View>
         </Modal>
 
-        <Button position="bottomLeft" 
-                transparent icon={ icon} 
+        <Button transparent icon={ icon} 
                 large color={ color }
                 { ...otherProps }
-                onPress={ this._toggle }>
+                onPress={ this.toggle }>
         </Button>
       </View>
     ); 

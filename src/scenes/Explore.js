@@ -63,7 +63,7 @@ class ExploreScene extends PureComponent {
     super(props);
     this._openProfile = this._openProfile.bind(this);
     this._toggleGeolocation = this._toggleGeolocation.bind(this);
-    this.navigate = this.navigate.bind(this);
+    this._action = this._action.bind(this);
 
     this.state = {
       modal: null
@@ -95,7 +95,9 @@ class ExploreScene extends PureComponent {
     // }
   }
 
-  navigate(scene) {
+  _action(scene) {
+    this.actionModal.toggle();
+
     this.props.handleNavigate({
       type: 'push',
       route: {
@@ -186,9 +188,13 @@ class ExploreScene extends PureComponent {
           <Avatar source={ viewer.user }
             onPress={ this._openProfile } />
 
-          <ActionModal icon="paw" color="#3d8af7">
+          <ActionModal 
+              icon="paw" color="#3d8af7" 
+              ref={ (modal) => { 
+                this.actionModal = modal; 
+              } }>
             <Button transparent vertical icon="camera" 
-                    onPress={ () => this.navigate('Camera') }
+                    onPress={ () => this._action('Camera') }
             >photo</Button>
 
             <Button transparent vertical icon="create"

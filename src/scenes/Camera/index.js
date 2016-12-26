@@ -9,7 +9,7 @@ import {
   View
 } from 'react-native';
 
-import Button from '../components/Button';
+import Button from '../../components/Button';
 import Camera from 'react-native-camera';
 
 const { Aspect, CaptureTarget, Type, Orientation, FlashMode, CaptureMode} = Camera.constants;
@@ -35,21 +35,47 @@ class CameraScene extends PureComponent {
 
   takePicture = () => {
     if (this.camera) {
-      this.camera.capture()
-        .then((data) => console.log(data))
-        .catch(err => console.error(err));
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.camera.capture({
+            metadata: {
+              location: position
+            }
+          })
+          .then((data) => this.preview(data))
+          .catch(err => console.error(err));
+        },
+        (error) => alert(error.message),
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      );
     }
   }
 
   startRecording = () => {
     if (this.camera) {
-      this.camera.capture({mode: CaptureMode.video})
-          .then((data) => console.log(data))
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          this.camera.capture({
+            mode: CaptureMode.video,
+            metadata: {
+              location: position
+            }
+          })
+          .then((data) => this.preview(data))
           .catch(err => console.error(err));
+        },
+        (error) => alert(error.message),
+        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      );
       this.setState({
         isRecording: true
       });
     }
+  }
+
+  preview = (data) => {
+    const {path, width, height, duration, size} = data;
+
   }
 
   stopRecording = () => {
