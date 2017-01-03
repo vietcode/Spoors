@@ -35,10 +35,12 @@ class Map extends PureComponent {
 
   componentDidUpdate(prevProps, prevState) {
     const { mode, center } = this.props;
-    if (mode === 'follow') {
+    if (mode === 'follow' && center) {
+      const { latitude, longitude } = center;
       this._map.easeTo({
-        ...center
-      })
+        latitude,
+        longitude 
+      });
     }
   }
 

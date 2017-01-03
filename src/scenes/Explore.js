@@ -86,17 +86,6 @@ class ExploreScene extends PureComponent {
     this.props.toggleGeolocation();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    const lastPos = prevProps.viewer.position;
-    var newPos = this.props.viewer.position;
-    // if (!lastPos && newPos) {
-    //   this._map.easeTo({
-    //     ...newPos,
-    //     zoomLevel: 20
-    //   });
-    // }
-  }
-
   _action(scene) {
     this.actionModal.toggle();
 
@@ -177,7 +166,7 @@ class ExploreScene extends PureComponent {
         <Map
           mode="follow"
           center={ viewer.position } 
-          zoom={ 8 }
+          zoom={ 12 }
         >
           { trips.map(this._renderTrip) }
 

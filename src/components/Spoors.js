@@ -17,7 +17,7 @@ import Search from '../containers/Search';
 import Profile from '../scenes/Profile';
 import Camera from '../scenes/Camera';
 
-import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
+// import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
 
 class Spoors extends PureComponent {
   constructor(props) {
@@ -31,6 +31,8 @@ class Spoors extends PureComponent {
   }
 
   componentWillMount() {
+    /*
+    
     BackgroundGeolocation.configure({
       // Desired accuracy in meters. Possible values [0,10,100,1000].
       // The lower the number, the more power devoted to GeoLocation 
@@ -91,6 +93,22 @@ class Spoors extends PureComponent {
     BackgroundGeolocation.start(() => {
       this.props.geolocation();
     });
+
+    */
+    
+    navigator.geolocation.getCurrentPosition(
+      ({coords, timestamp}) => {
+        this.props.geolocate(coords, timestamp);
+      },
+      (error) => alert(JSON.stringify(error)),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+    );
+
+    this.geolocator = navigator.geolocation.watchPosition(
+      ({coords, timestamp}) => {
+      this.props.geolocate(coords, timestamp);
+    },
+    {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 20});
   }
 
   componentDidMount () {
@@ -98,6 +116,7 @@ class Spoors extends PureComponent {
   }
   componentWillUnmount () {
     BackAndroid.removeEventListener('hardwareBackPress', this._handleBackAction);
+    navigator.geolocation.clearWatch(this.geolocator);
   }
   _renderScene (sceneProps) {
     const { viewer } = this.props;

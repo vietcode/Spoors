@@ -28,7 +28,9 @@ function mapDispatchToProps (dispatch) {
   return {
     pushRoute: (route) => dispatch(push(route)),
     popRoute: () => dispatch(pop()),
-    geolocate: (location) => dispatch(geolocate(location)),
+    // Dispatch new location update.
+    geolocate: (coords, timestamp) => dispatch(geolocate(coords, timestamp)),
+    // Dispatch toggling geolocation.
     geolocation: () => dispatch(toggleGeolocation())
   }
 }
