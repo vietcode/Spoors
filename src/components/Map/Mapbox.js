@@ -52,18 +52,27 @@ class Map extends PureComponent {
     const annotations = Children.map(children, (child) => {
       if (!child) return child;
       
-      let { children, coordinates, ...rest } = child.props;
+      let { children, coordinates, icon, size, ...rest } = child.props;
       if (!coordinates) return null;
       if (typeof(coordinates) === "string") {
         coordinates = decode(coordinates);
       }
 
       let id = child.props.id || encode(coordinates);
-      return {
+      let annotation = {
         id,
         ...rest,
         coordinates
+      };
+
+      if (icon && size) {
+        annotation.annotationImage = {
+          source: icon,
+          width: size,
+          height: size
+        }
       }
+      return annotation;
     });
 
     return (

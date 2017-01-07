@@ -12,6 +12,7 @@ import Map from '../components/Map';
 import Annotation from '../components/Map/Annotation';
 import Button from '../components/Button';
 import Avatar from '../components/Button/Avatar';
+import Icon from '../components/Icon';
 import ActionModal from '../components/Modal/ActionModal';
 import SearchBar from '../components/SearchBar';
 
@@ -70,6 +71,9 @@ class ExploreScene extends PureComponent {
     this.state = {
       modal: null
     };
+
+    Icon.getImageSource('motorbike', 20, 'black', 'MaterialCommunityIcons')
+    .then((source) => this.setState({ riderIcon: source }));
   }
 
   _openProfile(_event) {
@@ -156,7 +160,7 @@ class ExploreScene extends PureComponent {
         (<Annotation
             id="viewer"
             type="point"
-            icon="motorcycle" 
+            icon={ this.state.riderIcon } 
             size={ 30 } 
             coordinates={ [viewer.position.latitude, viewer.position.longitude] } />
         ) : null;
