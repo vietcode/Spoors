@@ -1,6 +1,6 @@
 import React, { PureComponent, PropTypes } from 'react';
 
-import { encode, decode } from 'polyline';
+import { encode, decode } from '@mapbox/polyline';
 
 class Annotation extends PureComponent {
   constructor(props) {

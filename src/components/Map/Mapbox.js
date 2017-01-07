@@ -7,7 +7,7 @@ import Mapbox, { MapView } from 'react-native-mapbox-gl';
 
 Mapbox.setAccessToken('pk.eyJ1Ijoic250cmFuIiwiYSI6ImNpd2dhc2dkMDAxNXcydHA5eXdzZG5qMDYifQ.ehH4hFHyvPlUvZSSk59QFw');
 
-import { encode, decode } from 'polyline';
+import { encode, decode } from '@mapbox/polyline';
 
 const styles = StyleSheet.create({
   map: {

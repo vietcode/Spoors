@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
 import gql from 'graphql-tag';
-import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
 
 import Map from '../scenes/Explore';
 

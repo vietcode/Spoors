@@ -7,29 +7,28 @@
     "test": "jest"
   },
   "dependencies": {
-    "apollo-client": "^0.5.24",
+    "@mapbox/polyline": "^0.2.0",
+    "apollo-client": "^0.6.0",
     "immutable": "^3.8.1",
-    "lodash": "^4.17.2",
-    "native-base": "^0.5.18",
-    "polyline": "^0.2.0",
-    "react": "15.4.1",
-    "react-apollo": "^0.7.2",
-    "react-native": "^0.39.2",
-    "react-native-camera": "https://github.com/lwansbrough/react-native-camera.git",
+    "lodash": "^4.17.4",
+    "native-base": "sntran/NativeBase",
+    "react": "^15.4.2",
+    "react-apollo": "^0.8.1",
+    "react-native": "^0.40.0",
+    "react-native-camera": "lwansbrough/react-native-camera#next",
     "react-native-geo-fencing": "^0.1.0",
-    "react-native-geocoder": "^0.4.5",
-    "react-native-mapbox-gl": "^5.1.0",
-    "react-native-mauron85-background-geolocation": "^0.2.0-alpha.5",
+    "react-native-geocoder": "sntran/react-native-geocoder",
+    "react-native-mapbox-gl": "sntran/react-native-mapbox-gl",
     "react-native-progress": "^3.2.0",
-    "react-native-video": "^0.9.0",
+    "react-native-video": "frontendyteam/react-native-video",
     "react-redux": "^5.0.1",
     "redux": "^3.6.0"
   },
   "devDependencies": {
-    "babel-jest": "17.0.2",
-    "babel-preset-react-native": "1.9.0",
-    "jest": "17.0.3",
-    "react-test-renderer": "15.4.1"
+    "babel-jest": "^18.0.0",
+    "babel-preset-react-native": "^1.9.1",
+    "jest": "^18.1.0",
+    "react-test-renderer": "^15.4.2"
   },
   "jest": {
     "preset": "react-native"
