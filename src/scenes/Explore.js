@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
     borderRadius: 5,
     height: 32,
-    width: 100
+    maxWidth: 100
   }
 });
 
@@ -156,21 +156,26 @@ class ExploreScene extends PureComponent {
   }
 
   _renderSightings(trip) {
+    const viewer = this.props.viewer, _map = this._map;
     if (!trip) {
-      trip = { members: []};
+      trip = { members: [viewer.user]};
     }
-    const members = trip.members.map((user) => (
+    const members = trip.members.map((user, index) => (
       <Image 
         style={{width: 16, height: 16}}
         source={{ uri: user.picture }}
-        key={ user.name }
+        key={ user.name + '-' + index }
       />
     ));
-    const button = <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>{ members }</View>
+    const button = <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>{ members }</View>
     return (
       <ActionModal 
         style={ styles.sightings }
         component={ button }
+        onPress={ () => {
+          _map.easeTo(viewer.position);
+          return false;
+        } }
       >
         <View style={{ flex: 1, alignItems: 'center' }}>
           <Text>Sightings</Text>
@@ -205,12 +210,11 @@ class ExploreScene extends PureComponent {
       <View style={ styles.container }>
         <Map
           mode="follow"
-          center={ viewer.position } 
+          center={ viewer.position }
           zoom={ 12 }
+          ref={ map => { this._map = map; }}
         >
-          { trip? null : trips.map(this._renderTrip) }
-
-          { trip? this._renderTrip(trip) : null }
+          { trip? this._renderTrip(trip) : trips.map(this._renderTrip) }
 
           { rider }
 

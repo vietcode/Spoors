@@ -28,6 +28,10 @@ class Map extends PureComponent {
 
   }
 
+  easeTo({latitude, longitude}, animated) {
+    this._map.easeTo({latitude, longitude}, animated);
+  }
+
   getStyleURL() {
     const hour = (new Date()).getHours();
     return hour > 17? Mapbox.mapStyles.dark : Mapbox.mapStyles.streets;
@@ -35,11 +39,14 @@ class Map extends PureComponent {
 
   componentDidUpdate(prevProps, prevState) {
     const { mode, center } = this.props;
-    if (mode === 'follow' && center) {
+    if (!this.state.center && center) {
       const { latitude, longitude } = center;
       this._map.easeTo({
         latitude,
         longitude 
+      });
+      this.setState({
+        center: center
       });
     }
   }
@@ -82,7 +89,7 @@ class Map extends PureComponent {
         initialCenterCoordinate={ center }
         initialZoomLevel={ zoom }
         initialDirection={ 0 }
-        rotateEnabled={ true }
+        rotateEnabled={ false }
         scrollEnabled={ true }
         zoomEnabled={ true }
         showsUserLocation={ false }
@@ -91,6 +98,7 @@ class Map extends PureComponent {
         annotations={ annotations }
         annotationsAreImmutable
         logoIsHidden={ true }
+        compassIsHidden={ true }
         attributionButtonIsHidden={ false }
         {...mapProps}
       >

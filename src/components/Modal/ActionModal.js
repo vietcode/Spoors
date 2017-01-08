@@ -8,6 +8,9 @@ import Modal from '.';
 import Button from '../Button';
 
 const styles = StyleSheet.create({
+  container: {
+    position: 'relative'
+  },
   actions: {
     flexDirection: 'row',
     justifyContent: 'center'
@@ -26,7 +29,15 @@ class ActionModal extends Component {
 
   toggle(event) {
     const { onPress } = this.props;
-    if (onPress) { onPress(event); }
+    let proceed;
+    
+    if (onPress) { 
+      proceed = onPress(event); 
+    }
+
+    if (proceed === false) {
+      return;
+    }
     
     this.setState({visible: !this.state.visible});
   }
@@ -36,7 +47,7 @@ class ActionModal extends Component {
     const { icon, component, color, children, ...otherProps } = this.props;
 
     return (
-      <View>
+      <View style={ styles.container }>
         <Modal
           transparent
           visible={ visible }

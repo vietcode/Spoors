@@ -33,8 +33,7 @@ class Spoors extends PureComponent {
     this._toggleGeolocation = this._toggleGeolocation.bind(this);
   }
 
-  componentWillMount() {
-    
+  componentDidMount () {
     navigator.geolocation.getCurrentPosition(
       ({coords, timestamp}) => {
         this.props.geolocate(coords, timestamp);
@@ -48,9 +47,7 @@ class Spoors extends PureComponent {
       this.props.geolocate(coords, timestamp);
     },
     {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 20});
-  }
 
-  componentDidMount () {
     BackAndroid.addEventListener('hardwareBackPress', this._handleBackAction);
   }
   componentWillUnmount () {
