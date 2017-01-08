@@ -3,6 +3,7 @@ import {
   Platform,
   StyleSheet,
   Text,
+  Image,
   View
 } from 'react-native';
 
@@ -46,7 +47,7 @@ const styles = StyleSheet.create({
   sightings: {
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
     borderRadius: 5,
-    height: 30,
+    height: 32,
     width: 100
   }
 });
@@ -142,19 +143,51 @@ class ExploreScene extends PureComponent {
   }
 
   _renderTrip(trip) {
-    return trip.routes.map((route) => (
+    return trip.routes.map((route, index) => (
       <Annotation
           id={ route.polyline }
           type="polyline" 
           coordinates={route.polyline}
           strokeWidth={ 4 }
           strokeColor="#4497ff"
+          key={"route-" + trip.id + "-" + index}
         />
     ));
   }
 
+  _renderSightings(trip) {
+    const members = trip.members.map((user) => (
+      <Image 
+        style={{width: 16, height: 16}}
+        source={{ uri: user.picture }}
+        key={ user.name }
+      />
+    ));
+    const button = <View style={{ justifyContent: 'space-between', flexDirection: 'row', flex: 1 }}>{ members }</View>
+    return (
+      <ActionModal 
+        style={ styles.sightings }
+        component={ button }
+      >
+        <View style={{ flex: 1, alignItems: 'center' }}>
+          <Text>Sightings</Text>
+          <View style={{ marginTop: 16 }}>
+          {
+            trip.members.map((user) => (
+              <Avatar
+                key={ user.name }
+                source={ user } />
+            ))
+          }
+          </View>
+        </View>
+
+      </ActionModal>
+    );
+  }
+
   render() : ReactElement<any> {
-    let { viewer, trips, selectedMarker, waypoints, geolocating } = this.props;
+    let { viewer, trip, trips, selectedMarker, waypoints, geolocating } = this.props;
     const menu = this._renderMenu();
     let rider = viewer.position? 
         (<Annotation
@@ -172,7 +205,9 @@ class ExploreScene extends PureComponent {
           center={ viewer.position } 
           zoom={ 12 }
         >
-          { trips.map(this._renderTrip) }
+          { trip? null : trips.map(this._renderTrip) }
+
+          { trip? this._renderTrip(trip) : null }
 
           { rider }
 
@@ -204,9 +239,7 @@ class ExploreScene extends PureComponent {
             >record</Button>
           </ActionModal>
 
-          <ActionModal style={ styles.sightings }>
-            <Text>Sightings</Text>
-          </ActionModal>
+          { trip && this._renderSightings(trip) }
         </View>
       </View>
     );

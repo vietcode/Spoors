@@ -14,8 +14,8 @@ const styles = StyleSheet.create({
     
   },
   image: {
-    width: 50,
-    height: 50,
+    width: 48,
+    height: 48,
     borderRadius: 25
   },
   name: {
@@ -43,7 +43,7 @@ class Avatar extends PureComponent {
             height={4}
             progress={ source.progress }
           />
-          <Text style={ styles.name }>{ source.name }</Text>
+          <Text style={ styles.name }>{ name }</Text>
         </View>
       </Button>
     )

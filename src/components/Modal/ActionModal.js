@@ -25,12 +25,15 @@ class ActionModal extends Component {
   }
 
   toggle(event) {
+    const { onPress } = this.props;
+    if (onPress) { onPress(event); }
+    
     this.setState({visible: !this.state.visible});
   }
 
   render() {
     const { visible } = this.state;
-    const { icon, color, children, ...otherProps } = this.props;
+    const { icon, component, color, children, ...otherProps } = this.props;
 
     return (
       <View>
@@ -53,6 +56,7 @@ class ActionModal extends Component {
                 large color={ color }
                 { ...otherProps }
                 onPress={ this.toggle }>
+          { component }
         </Button>
       </View>
     ); 

@@ -27,9 +27,12 @@ const withNearestTrips = graphql(NEAREST_TRIPS_BY_LOCATION, {
       return { trips: [] };
     }
 
+    const currentTrip = data.viewer.trip;
+
     return {
       // We don't want our UI component to be aware of the special shape of
       // GraphQL connections, so we transform the props.
+      trip: data.viewer.trip,
       trips: data.viewer.allTrips.nodes
     };
   },

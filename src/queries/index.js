@@ -7,6 +7,11 @@ export const NEAREST_TRIPS_BY_LOCATION = gql`
         routes {
           polyline
         }
+        members {
+          name,
+          picture,
+          position
+        }
       }
       allTrips(location: $location, radius: $radius, unit: $unit) {
         nodes {
