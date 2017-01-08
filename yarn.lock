@@ -3264,6 +3264,12 @@ react-native-code-push@latest:
     inquirer "1.1.2"
     plist "1.2.0"
 
+react-native-drawer@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-native-drawer/-/react-native-drawer-2.3.0.tgz#a0369ec80ff0b61c9f152dbdea91fe76c843113a"
+  dependencies:
+    tween-functions "^1.0.1"
+
 react-native-easy-grid@0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/react-native-easy-grid/-/react-native-easy-grid-0.1.7.tgz#44205cc39adff32a8a20efa8451d76a4499f0a3f"
@@ -3285,13 +3291,6 @@ react-native-keyboard-aware-scroll-view@0.2.0:
   resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scroll-view/-/react-native-keyboard-aware-scroll-view-0.2.0.tgz#d9a94b358cbf92693750b16b4364d64d70060f20"
   dependencies:
     react-timer-mixin "^0.13.3"
-
-react-native-mapbox-gl@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-mapbox-gl/-/react-native-mapbox-gl-5.1.0.tgz#8035687b234960fa2a60f3deef7e277049a46860"
-  dependencies:
-    babel-eslint "^6.1.2"
-    lodash "^4.13.1"
 
 react-native-mapbox-gl@sntran/react-native-mapbox-gl:
   version "5.2.0"
@@ -4027,6 +4026,10 @@ tsscmp@1.0.5:
 tunnel-agent@~0.4.1:
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/tunnel-agent/-/tunnel-agent-0.4.3.tgz#6373db76909fe570e08d73583365ed828a74eeeb"
+
+tween-functions@^1.0.1:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/tween-functions/-/tween-functions-1.2.0.tgz#1ae3a50e7c60bb3def774eac707acbca73bbc3ff"
 
 tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   version "0.14.5"

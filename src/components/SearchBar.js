@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     right: 10,
   },
   button: {
+    width: 40
   },
   icon: {
     fontSize: 25,
@@ -67,7 +68,7 @@ class SearchBar extends PureComponent {
     });
   }
 
-  cancel(args) {
+  cancel() {
     this.textInput.setNativeProps({'editable':false});
 
     this.setState({
@@ -75,46 +76,39 @@ class SearchBar extends PureComponent {
     }, function() {
       this.textInput.setNativeProps({'editable':true});
     });
-
-    this.props.goBack(args);
   }
 
-  _renderMenu() {
-    return (
-      <Button icon="menu"
-        style={ styles.button } transparent />
-    );
-  }
+  _renderSideButton(button) {
+    if (!button) return null;
+    const { onPress, ...props } = button.props;
 
-  _renderBackButton() {
+    const thisOnPress = (event) => {
+      this.cancel();
+      onPress && onPress(event);
+    }
+
     return (
-      <Button icon="arrow-back"
-        style={ styles.button } transparent
-        onPress={ this.cancel } />
+      <button.type {...props} style={ styles.button } onPress={ thisOnPress } />
     );
   }
 
   render() {
     const props = this.props;
-    const {style, children, geocode, route, ...other} = props;
-
-    const leftButton = route.key !== 'explore'? this._renderBackButton() : this._renderMenu();
+    const {style, children, geocode, leftButton, rightButton, ...other} = props;
 
     return (
       <View style={ [styles.container, style] }>
-        { leftButton }
+        { this._renderSideButton(leftButton) }
         <TextInput
           ref={(input) => this.textInput = input}
           style={ styles.input }
           returnKeyType="done"
-          onFocus={this.open}
+          onFocus={ this.open }
           clearButtonMode="while-editing"
           onChangeText={ geocode }
           {...other}
         />
-        <Button icon="map"
-          style={ styles.button } transparent
-        />
+        { this._renderSideButton(rightButton) }
       </View>
     )
   }
@@ -122,10 +116,6 @@ class SearchBar extends PureComponent {
 
 SearchBar.propTypes = {
   geocode: PropTypes.func.isRequired, // Passed down by Redux container from its dispatch.
-  route: PropTypes.shape({
-    key: PropTypes.string,
-    title: PropTypes.string
-  })
 }
 
 export default SearchBar;

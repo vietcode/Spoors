@@ -18,8 +18,7 @@ import reducers from './reducers';
 // App container that provides navigation props and viewer data.
 import Spoors from './containers/Spoors';
 
-const networkInterface = createNetworkInterface({uri: 'https://bsn.herokuapp.com/api'});
-// const networkInterface = createNetworkInterface({uri: 'http://localhost:4000/api'});
+const networkInterface = createNetworkInterface({uri: 'https://phuot.herokuapp.com/api'});
 
 const client = new ApolloClient({
   networkInterface,

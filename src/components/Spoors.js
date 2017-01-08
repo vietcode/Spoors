@@ -10,14 +10,17 @@ const {
   Header: NavigationHeader,
   PropTypes: NavigationPropTypes
 } = NavigationExperimental;
+import Drawer from 'react-native-drawer';
 
+import DrawerContent from './Drawer';
 import SearchBar from '../containers/SearchBar';
 import Explore from '../containers/Map';
 import Search from '../containers/Search';
 import Profile from '../scenes/Profile';
 import Camera from '../scenes/Camera';
+import Settings from '../scenes/Settings';
 
-// import BackgroundGeolocation from 'react-native-mauron85-background-geolocation';
+import Button from './Button';
 
 class Spoors extends PureComponent {
   constructor(props) {
@@ -31,70 +34,6 @@ class Spoors extends PureComponent {
   }
 
   componentWillMount() {
-    /*
-    
-    BackgroundGeolocation.configure({
-      // Desired accuracy in meters. Possible values [0,10,100,1000].
-      // The lower the number, the more power devoted to GeoLocation 
-      // resulting in higher accuracy readings.
-      desiredAccuracy: 0,
-      // Stationary radius in meters. When stopped, the minimum 
-      // distance the device must move beyond the stationary location
-      // for aggressive background-tracking to engage.
-      stationaryRadius: 1,
-      // The minimum distance (measured in meters) a device must move 
-      // horizontally before an update event is generated
-      distanceFilter: 0,
-      // When enabled, the plugin will emit sounds for life-cycle 
-      // events of background-geolocation!
-      // debug: true,
-      startOnBoot: true,
-      // Enable this in order to force a stop() when the application 
-      // terminated (e.g. on iOS, double-tap home button, swipe away 
-      // the app).
-      stopOnTerminate: true,
-      // The minimum milliseconds interval between location updates.
-      interval: 5000,
-      fastestInterval: 5000,
-      activitiesInterval: 10000,
-      // Custom notification title in Android drawer.
-      notificationTitle: 'Recording spoors',
-      // Custom notification text in Android drawer.
-      notificationText: 'Text later.',
-      // Server url where to send HTTP POST with recorded locations.
-      // url: 'https://phuot.herokuapp.com/location',
-      // Server url where to send fail to post locations
-      // syncUrl: 'https://phuot.herokuapp.com/location',
-      // Specifies how many previously failed locations will be sent 
-      // to server at once.
-      syncThreshold: 100,
-      // Limit maximum number of locations stored into db.
-      maxLocations: 10000,
-      httpHeaders: {
-        'X-App': 'spoors'
-      },
-      // Switch to less accurate significant changes and region 
-      // monitory when in background.
-      saveBatteryOnBackground: false
-    }, function () { });
-
-    BackgroundGeolocation.on('location', (location) => {
-      this.props.geolocate(location);
-    });
-
-    BackgroundGeolocation.on('error', (error) => {
-      alert('[ERROR] BackgroundGeolocation error:', error);
-    });
-
-    BackgroundGeolocation.on('stationary', (stationaryLocation) => {
-      //handle stationary locations here
-    });
-
-    BackgroundGeolocation.start(() => {
-      this.props.geolocation();
-    });
-
-    */
     
     navigator.geolocation.getCurrentPosition(
       ({coords, timestamp}) => {
@@ -118,6 +57,11 @@ class Spoors extends PureComponent {
     BackAndroid.removeEventListener('hardwareBackPress', this._handleBackAction);
     navigator.geolocation.clearWatch(this.geolocator);
   }
+
+  openDrawer = () => {
+    this._drawer.open()
+  };
+
   _renderScene (sceneProps) {
     const { viewer } = this.props;
     const { route } = sceneProps.scene;
@@ -147,6 +91,10 @@ class Spoors extends PureComponent {
         return (
           <Camera {...props} />
         );
+      case 'settings':
+        return (
+          <Settings {...props} />
+        );
       default:
         return null;
     }
@@ -173,16 +121,7 @@ class Spoors extends PureComponent {
 
   _toggleGeolocation() {
     const geolocating = !this.props.geolocating;
-
-    if (geolocating) {
-      BackgroundGeolocation.start(() => {
-        this.props.geolocation();
-      });
-    } else {
-      BackgroundGeolocation.stop(() => {
-        this.props.geolocation();
-      });
-    }
+    this.props.geolocation();
   }
 
   _renderHeader(sceneProps) {
@@ -201,7 +140,16 @@ class Spoors extends PureComponent {
     return (
       <SearchBar
         placeholder="Try places, restaurants, hotels..."
-        route={ route }
+        leftButton={
+          <Button 
+            icon={ route.key !== 'explore'? "arrow-back" : "menu" } 
+            transparent
+            onPress={ route.key !== 'explore'? this._handleBackAction : this.openDrawer }
+          />
+        }
+        rightButton={
+          <Button icon="map" transparent />
+        }
         {...props} 
       />
     );
@@ -217,15 +165,29 @@ class Spoors extends PureComponent {
 
     // @TODO: Change direction based on scene.
     return (
-      <NavigationCardStack
-        direction='vertical'
-        navigationState={ this.props.navigation }
-        renderHeader={ this._renderHeader }
-        renderScene={ this._renderScene }
-        enableGestures={ true }
-        style={{  }}
-        cardStyle={ cardStyle }
-      />
+      <Drawer
+        ref={(ref) => this._drawer = ref}
+        content={<DrawerContent handleNavigate={ this._handleNavigate } />}
+        styles={ drawerStyles }
+        type="overlay"
+        tapToClose={ true }
+        openDrawerOffset={ 0.2 } // 20% gap on the right side of drawer
+        panCloseMask={ 0.2 }
+        closedDrawerOffset={ -3 }
+        tweenHandler={(ratio) => ({
+          main: { opacity:(2-ratio)/2 }
+        })}
+      >
+        <NavigationCardStack
+          direction='vertical'
+          navigationState={ this.props.navigation }
+          renderHeader={ this._renderHeader }
+          renderScene={ this._renderScene }
+          enableGestures={ true }
+          style={{  }}
+          cardStyle={ cardStyle }
+        />
+      </Drawer>
     );
   }
 }
@@ -245,5 +207,10 @@ const styles = StyleSheet.create({
     top: undefined
   }
 });
+
+const drawerStyles = {
+  drawer: { shadowColor: '#000000', shadowOpacity: 0.5, shadowRadius: 3},
+  main: {paddingLeft: 3},
+}
 
 export default Spoors;

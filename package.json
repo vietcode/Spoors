@@ -17,6 +17,7 @@
     "react-native": "^0.40.0",
     "react-native-camera": "lwansbrough/react-native-camera#next",
     "react-native-code-push": "latest",
+    "react-native-drawer": "^2.3.0",
     "react-native-geo-fencing": "^0.1.0",
     "react-native-geocoder": "sntran/react-native-geocoder",
     "react-native-mapbox-gl": "sntran/react-native-mapbox-gl",
