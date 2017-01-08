@@ -12,12 +12,14 @@ import {
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import ApolloClient, { createNetworkInterface, addTypename } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
+import codePush from "react-native-code-push";
 
 import reducers from './reducers';
 // App container that provides navigation props and viewer data.
 import Spoors from './containers/Spoors';
 
-const networkInterface = createNetworkInterface({uri: 'https://phuot.herokuapp.com/api'});
+const networkInterface = createNetworkInterface({uri: 'https://bsn.herokuapp.com/api'});
+// const networkInterface = createNetworkInterface({uri: 'http://localhost:4000/api'});
 
 const client = new ApolloClient({
   networkInterface,
@@ -47,6 +49,30 @@ const store = createStore(
 );
 
 class App extends Component {
+  codePushStatusDidChange(status) {
+    switch(status) {
+      case codePush.SyncStatus.CHECKING_FOR_UPDATE:
+        // console.log("Checking for updates.");
+        break;
+      case codePush.SyncStatus.DOWNLOADING_PACKAGE:
+        // console.log("Downloading package.");
+        break;
+      case codePush.SyncStatus.INSTALLING_UPDATE:
+        // console.log("Installing update.");
+        break;
+      case codePush.SyncStatus.UP_TO_DATE:
+        // console.log("Up-to-date.");
+        break;
+      case codePush.SyncStatus.UPDATE_INSTALLED:
+        // console.log("Update installed.");
+        break;
+    }
+  }
+
+  codePushDownloadDidProgress(progress) {
+    // console.log(progress.receivedBytes + " of " + progress.totalBytes + " received.");
+  }
+
   render() {
     return (
       <ApolloProvider store={store} client={client}>
@@ -56,4 +82,8 @@ class App extends Component {
   }
 }
 
-export default App;
+let codePushOptions = { 
+  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
+  installMode: codePush.InstallMode.ON_NEXT_RESUME
+};
+export default codePush(codePushOptions)(App);

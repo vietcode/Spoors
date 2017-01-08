@@ -1,4 +1,5 @@
 <resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">j4xsNqx12mTfmZzVJj7DlL0J7Tvi41DzWBjBM</string>
     <string name="app_name">Spoors</string>
     <string name="account_type">com.sntran.spoors.account</string>
     <string name="content_authority">com.sntran.spoors.authority</string>

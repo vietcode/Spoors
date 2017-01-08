@@ -100,5 +100,7 @@
     </array>
     <key>NSLocationAlwaysUsageDescription</key>
     <string>App requires background tracking to store your route.</string>
+    <key>CodePushDeploymentKey</key>
+    <string>j4xsNqx12mTfmZzVJj7DlL0J7Tvi41DzWBjBM</string>
   </dict>
 </plist>
