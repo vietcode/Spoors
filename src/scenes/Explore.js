@@ -156,6 +156,9 @@ class ExploreScene extends PureComponent {
   }
 
   _renderSightings(trip) {
+    if (!trip) {
+      trip = { members: []};
+    }
     const members = trip.members.map((user) => (
       <Image 
         style={{width: 16, height: 16}}
@@ -239,7 +242,7 @@ class ExploreScene extends PureComponent {
             >record</Button>
           </ActionModal>
 
-          { trip && this._renderSightings(trip) }
+          { this._renderSightings(trip) }
         </View>
       </View>
     );
