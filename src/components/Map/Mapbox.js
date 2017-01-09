@@ -32,11 +32,6 @@ class Map extends PureComponent {
     this._map.easeTo({latitude, longitude}, animated);
   }
 
-  getStyleURL() {
-    const hour = (new Date()).getHours();
-    return hour > 17? Mapbox.mapStyles.dark : Mapbox.mapStyles.streets;
-  }
-
   componentDidUpdate(prevProps, prevState) {
     const { mode, center } = this.props;
     if (!this.state.center && center) {
@@ -52,7 +47,7 @@ class Map extends PureComponent {
   }
 
   render() {
-    const { children, ...mapProps } = this.props;
+    const { children, night, ...mapProps } = this.props;
     const { center, zoom, userTrackingMode } = this.state;
 
     // Until this Mapbox library supports annotation view, we do this:
@@ -93,7 +88,7 @@ class Map extends PureComponent {
         scrollEnabled={ true }
         zoomEnabled={ true }
         showsUserLocation={ false }
-        styleURL={ this.getStyleURL() }
+        styleURL={ night? Mapbox.mapStyles.dark : Mapbox.mapStyles.streets }
         userTrackingMode={ userTrackingMode }
         annotations={ annotations }
         annotationsAreImmutable

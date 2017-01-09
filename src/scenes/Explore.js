@@ -74,7 +74,10 @@ class ExploreScene extends PureComponent {
     };
 
     Icon.getImageSource('motorbike', 20, 'black', 'MaterialCommunityIcons')
-    .then((source) => this.setState({ riderIcon: source }));
+    .then((source) => this.setState({ riderDayIcon: source }));
+
+    Icon.getImageSource('motorbike', 20, '#b9fd4b', 'MaterialCommunityIcons')
+    .then((source) => this.setState({ riderNightIcon: source }));
   }
 
   _openProfile(_event) {
@@ -196,12 +199,15 @@ class ExploreScene extends PureComponent {
 
   render() : ReactElement<any> {
     let { viewer, trip, trips, selectedMarker, waypoints, geolocating } = this.props;
+
+    const isNight = (new Date()).getHours() > 17;
+
     const menu = this._renderMenu();
     let rider = viewer.position? 
         (<Annotation
             id="viewer"
             type="point"
-            icon={ this.state.riderIcon } 
+            icon={ isNight? this.state.riderNightIcon : this.state.riderDayIcon } 
             size={ 30 } 
             coordinates={ [viewer.position.latitude, viewer.position.longitude] } />
         ) : null;
@@ -212,6 +218,7 @@ class ExploreScene extends PureComponent {
           mode="follow"
           center={ viewer.position }
           zoom={ 12 }
+          night={ isNight }
           ref={ map => { this._map = map; }}
         >
           { trip? this._renderTrip(trip) : trips.map(this._renderTrip) }
