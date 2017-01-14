@@ -47,8 +47,7 @@ class CameraScene extends PureComponent {
           .then((data) => this.preview(data))
           .catch(err => console.error(err));
         },
-        (error) => alert(error.message),
-        {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+        (error) => alert(error.message)
       );
     }
   }
