@@ -7,6 +7,8 @@ import {
 import { Fab, Button as NBButton, Icon } from 'native-base';
 import _ from 'lodash';
 
+// import Icon from '../Icon';
+
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center'
@@ -29,7 +31,9 @@ class Button extends PureComponent {
     let buttonStyles = [ styles.button, style ];
 
     if (icon) {
-      let iconName = (Platform.OS === 'android'? 'md-' : 'ios-') + icon;
+      const iconName = (icon.indexOf('-outline') === -1? 
+        (Platform.OS === 'android'? 'md-' : 'ios-') : 'ios-'
+       ) + icon;
       icon = (<Icon name={ iconName }
         style={ {fontSize: size, ...iconStyle} } key={'icon-' + iconName}
       />);

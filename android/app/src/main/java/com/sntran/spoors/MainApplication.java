@@ -8,7 +8,6 @@ import com.microsoft.codepush.react.CodePush;
 import com.surialabs.rn.geofencing.GeoFencingPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
-import com.marianhello.react.BackgroundGeolocationPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.mapbox.reactnativemapboxgl.ReactNativeMapboxGLPackage;
 import com.devfd.RNGeocoder.RNGeocoderPackage;
@@ -43,7 +42,6 @@ public class MainApplication extends Application implements ReactApplication {
             new GeoFencingPackage(),
             new ReactVideoPackage(),
             new RCTCameraPackage(),
-            new BackgroundGeolocationPackage(),
             new VectorIconsPackage(),
             new ReactNativeMapboxGLPackage(),
             new RNGeocoderPackage()

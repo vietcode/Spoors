@@ -2,7 +2,8 @@ import React, { PureComponent, PropTypes } from 'react';
 import {
   BackAndroid,
   NavigationExperimental,
-  StyleSheet
+  StyleSheet,
+  Platform
 } from 'react-native';
 
 const {
@@ -38,15 +39,15 @@ class Spoors extends PureComponent {
       ({coords, timestamp}) => {
         this.props.geolocate(coords, timestamp);
       },
-      (error) => alert(JSON.stringify(error)),
-      {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000}
+      (error) => alert(JSON.stringify(error))
     );
 
     this.geolocator = navigator.geolocation.watchPosition(
       ({coords, timestamp}) => {
       this.props.geolocate(coords, timestamp);
     },
-    {enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 20});
+    // https://github.com/facebook/react-native/issues/7495
+    {enableHighAccuracy: Platform.OS !== 'android', timeout: 20000, maximumAge: 1000, distanceFilter: 20});
 
     BackAndroid.addEventListener('hardwareBackPress', this._handleBackAction);
   }

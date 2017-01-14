@@ -248,7 +248,7 @@ class ExploreScene extends PureComponent {
             >audio</Button>
             
             <Button transparent vertical 
-                    icon={geolocating? "radio-button-on" : "locate-outline"} 
+                    icon={geolocating? "navigate" : "navigate-outline"} 
                     onPress={ this._toggleGeolocation }
             >record</Button>
           </ActionModal>

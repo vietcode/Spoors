@@ -28,7 +28,7 @@ class Map extends PureComponent {
 
   }
 
-  easeTo({latitude, longitude}, animated) {
+  easeTo({latitude, longitude} = {}, animated) {
     this._map.easeTo({latitude, longitude}, animated);
   }
 
