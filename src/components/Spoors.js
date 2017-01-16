@@ -17,7 +17,7 @@ import DrawerContent from './Drawer';
 import SearchBar from '../containers/SearchBar';
 import Explore from '../containers/Map';
 import Search from '../containers/Search';
-import Profile from '../scenes/Profile';
+import Profile from '../containers/Profile';
 import Camera from '../scenes/Camera';
 import Settings from '../scenes/Settings';
 import Login from '../containers/Login';
@@ -104,10 +104,10 @@ class Spoors extends PureComponent {
   }
   _handleBackAction () {
     if (this.props.navigation.index === 0) {
-      return false
+      return false;
     }
     this.props.popRoute();
-    return true
+    return true;
   }
   _handleNavigate (action) {
     switch (action && action.type) {

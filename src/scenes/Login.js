@@ -59,8 +59,6 @@ class LoginScene extends PureComponent {
     this.state = {
       error: null,
       value: {
-        username: 'chitho123@gmail.com',
-        password: 'namnguyen123'
       }
     }
   }

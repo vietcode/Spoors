@@ -22,6 +22,12 @@ const styles = StyleSheet.create({
   image: {
     height: 300
   },
+  padded: {
+    paddingTop: 10,
+    paddingRight: 20,
+    paddingBottom: 10,
+    paddingLeft: 20
+  },
   toolbar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -46,17 +52,21 @@ class ProfileScene extends PureComponent {
     });
   }
 
-  logOut = () => {
-    this.props.client.resetStore();
+  logout = () => {
+    this.props.goBack();
+    this.props.logout();
   }
 
   render() {
     const { viewer, goBack } = this.props;
+    if (!viewer || !viewer.user) {
+      return null;
+    }
 
     const leftButton = viewer.user?
       <Button 
         vertical icon="log-out" transparent size={ 40 } large
-        onPress={ this.logOut }
+        onPress={ this.logout }
       >log out</Button> :
       <Button vertical icon="log-in" transparent size={ 40 } large>log in</Button>;
 
@@ -69,13 +79,13 @@ class ProfileScene extends PureComponent {
         <View style={ styles.content }>
           { image }
 
-          <View style={{ alignItems: 'center', borderBottomWidth: StyleSheet.hairlineWidth}}>
+          <View style={ [styles.padded, { alignItems: 'center', borderBottomWidth: StyleSheet.hairlineWidth}] }>
             <Text>{ viewer.user.name }</Text>
             <Text>Level: { viewer.user.level }</Text>
           </View>
 
-          <View>
-            <Text>Son's achivements and badges here</Text>
+          <View style={ styles.padded }>
+            <Text>{ viewer.user.name }'s achivements and badges here</Text>
           </View>
         </View>
 
@@ -84,7 +94,7 @@ class ProfileScene extends PureComponent {
 
           <Button vertical icon="close-circle-outline" large
                   transparent size={ 40 }
-                  onPress={goBack}>close</Button>
+                  onPress={ goBack }>close</Button>
 
           <Button vertical icon="person-add" transparent large size={ 40 }>
             register

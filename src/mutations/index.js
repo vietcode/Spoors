@@ -7,3 +7,15 @@ export const CREATE_AUTHENTICATION_TOKEN = gql`
     }
   }
 `;
+
+export const DELETE_AUTHENTICATION_TOKEN = gql`
+  mutation DeleteToken {
+    deleteToken(input: {timestamp: $timestamp}) {
+      viewer {
+        user {
+          name
+        }
+      }
+    }
+  }
+`;
