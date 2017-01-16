@@ -1,10 +1,52 @@
 import { connect } from 'react-redux';
+import { graphql, compose } from 'react-apollo';
 
 import App from '../components/Spoors';
 import { push, pop } from '../actions/navActions';
 import { toggle as toggleGeolocation, geolocate } from '../actions/geolocationActions';
 
-function mapStateToProps (state) {
+import { VIEWER } from '../queries';
+
+const withViewer = graphql(VIEWER, {
+  options: (_) => ({
+    variables: {
+    }
+  }),
+  props: ({ data, viewer = {} }) => {
+    if (data.loading) {
+      return { 
+        loading: true, 
+        viewer: {
+          ...viewer,
+          user: null
+        }
+      };
+    }
+
+    if (data.error) {
+      console.log(data.error);
+      return { 
+        viewer: {
+          ...viewer,
+          user: null
+        } 
+      };
+    }
+
+    return {
+      viewer: {
+        ...viewer,
+        ...data.viewer
+      }
+    }
+  },
+});
+
+function mapStateToProps (state, { viewer = {} }) {
+
+  viewer.position = state.map.geolocation;
+  viewer.pointOfInterest = state.pointOfInterest;
+
   return {
     // `state.navigation` is from the reducer
     navigation: state.navigation,
@@ -12,12 +54,7 @@ function mapStateToProps (state) {
     geolocating: state.geolocating,
     // @TODO: Make GraphQL query for viewer's user info.
     viewer: {
-      user: {
-        name: "Son Tran-Nguyen",
-        picture: "http://apriliauae.com/wp-content/uploads/2014/04/vespa-girl.jpg",
-        level: 13,
-        progress: 0.75
-      },
+      ...viewer,
       position: state.map.geolocation,
       pointOfInterest: state.pointOfInterest
     }
@@ -35,7 +72,7 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+export default compose(
+  withViewer,
+  connect(mapStateToProps, mapDispatchToProps)
 )(App);

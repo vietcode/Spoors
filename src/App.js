@@ -6,22 +6,41 @@
  */
 
 import React, { Component } from 'react';
-import {
-} from 'react-native';
 
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import ApolloClient, { createNetworkInterface, addTypename } from 'apollo-client';
 import { ApolloProvider } from 'react-apollo';
 import codePush from "react-native-code-push";
 
+import Authenticator from './utils/Authenticator';
 import reducers from './reducers';
 // App container that provides navigation props and viewer data.
 import Spoors from './containers/Spoors';
 
-const networkInterface = createNetworkInterface({uri: 'https://phuot.herokuapp.com/api'});
+const networkInterface = createNetworkInterface({
+  uri: 'http://localhost:4000/api',
+  batchInterval: 10,
+  opts: {
+    // Options to pass along to `fetch`
+  }
+});
+
+networkInterface.use([{
+  async applyMiddleware(req, next) {
+    if (!req.options.headers) {
+      req.options.headers = {};  // Create the header object if needed.
+    }
+
+    // get the authentication token from local storage if it exists
+    const token = await Authenticator.token;
+    req.options.headers.authorization = token ? `Bearer ${token}` : null;
+    next();
+  }
+}]);
 
 const client = new ApolloClient({
   networkInterface,
+  queryDeduplication: true,
   // Apollo transformer to automatically add `__typename` to all queries.
   queryTransformer: addTypename,
   // Normalize ID for different object types for Apollo caching.

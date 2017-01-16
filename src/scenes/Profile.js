@@ -46,11 +46,18 @@ class ProfileScene extends PureComponent {
     });
   }
 
+  logOut = () => {
+    this.props.client.resetStore();
+  }
+
   render() {
     const { viewer, goBack } = this.props;
 
     const leftButton = viewer.user?
-      <Button vertical icon="log-out" transparent size={ 40 } large>log out</Button> :
+      <Button 
+        vertical icon="log-out" transparent size={ 40 } large
+        onPress={ this.logOut }
+      >log out</Button> :
       <Button vertical icon="log-in" transparent size={ 40 } large>log in</Button>;
 
     const image = viewer.user? <Image

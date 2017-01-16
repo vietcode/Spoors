@@ -20,6 +20,7 @@ import Search from '../containers/Search';
 import Profile from '../scenes/Profile';
 import Camera from '../scenes/Camera';
 import Settings from '../scenes/Settings';
+import Login from '../containers/Login';
 
 import Button from './Button';
 
@@ -92,6 +93,10 @@ class Spoors extends PureComponent {
       case 'settings':
         return (
           <Settings {...props} />
+        );
+      case 'login':
+        return (
+          <Login {...props} />
         );
       default:
         return null;

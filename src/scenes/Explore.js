@@ -81,11 +81,13 @@ class ExploreScene extends PureComponent {
   }
 
   _openProfile(_event) {
+    const viewer = this.props.viewer;
+
     this.props.handleNavigate({
       type: 'push',
       route: {
-        key: 'profile',
-        title: 'Profile'
+        key: viewer.user? 'profile' : 'login',
+        title: viewer.user? 'Profile' : 'Login'
       }
     });
   }
@@ -161,14 +163,15 @@ class ExploreScene extends PureComponent {
   _renderSightings(trip) {
     const viewer = this.props.viewer, _map = this._map;
     if (!trip) {
+
       trip = { members: [viewer.user]};
     }
     const members = trip.members.map((user, index) => (
-      <Image 
-        style={{width: 16, height: 16}}
-        source={{ uri: user.picture }}
-        key={ user.name + '-' + index }
-      />
+        (user? <Image 
+          style={{width: 16, height: 16}}
+          source={{ uri: user.picture }}
+          key={ user.name + '-' + index }
+        /> : <Icon name="contact" key={ 'sighting-' + index } style={ { fontSize: 20 }} />)
     ));
     const button = <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>{ members }</View>
     return (
@@ -184,9 +187,9 @@ class ExploreScene extends PureComponent {
           <Text>Sightings</Text>
           <View style={{ marginTop: 16 }}>
           {
-            trip.members.map((user) => (
+            trip.members.map((user, index) => (
               <Avatar
-                key={ user.name }
+                key={ 'sighting-' +  index }
                 source={ user } />
             ))
           }
@@ -230,7 +233,8 @@ class ExploreScene extends PureComponent {
 
         <View style={ styles.footer }>
           <Avatar source={ viewer.user }
-            onPress={ this._openProfile } />
+            onPress={ this._openProfile }
+            color="#b9fd4b" />
 
           <ActionModal 
               icon="paw" color="#3d8af7" 

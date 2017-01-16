@@ -24,6 +24,9 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 10
+  },
+  icon: {
+    fontSize: (Platform.OS === 'ios' ) ? 30 : 28
   }
 });
 
@@ -32,13 +35,16 @@ class Icon extends PureComponent {
     this.Icon = Icon.fromFamily(this.props.family);
   }
 
+  componentWillUpdate(nextProps) {
+    this.Icon = Icon.fromFamily(nextProps.family);
+  }
+
   render() {
-    const { name, ...props } = this.props;
-    let iconName = (Platform.OS === 'android'? 'md-' : 'ios-') + name;
+    const { name, family, style, ...props } = this.props;
+    let iconName = (family === 'Ionicons'? (Platform.OS === 'android'? 'md-' : 'ios-') : '') + name;
 
     return (
-      <this.Icon name={ iconName } { ...props }
-      />
+      <this.Icon name={ iconName } style={ [ styles.icon, style] } { ...props }/>
     )
   }
 }

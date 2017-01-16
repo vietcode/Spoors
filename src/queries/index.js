@@ -1,5 +1,18 @@
 import gql from 'graphql-tag';
 
+export const VIEWER = gql`
+  query Viewer {
+    viewer {
+      user {
+        name,
+        picture,
+        level,
+        progress
+      }
+    }
+  }
+`;
+
 export const NEAREST_TRIPS_BY_LOCATION = gql`
   query NearestTrips($location: _GeoLocationInput!, $radius: Int!, $unit: _GeoUnit) {
     viewer {

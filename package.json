@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "android:build": "cd android && ./gradlew assembleRelease",
+    "android:test": "react-native run-android --configuration=release"
   },
   "dependencies": {
     "@mapbox/polyline": "^0.2.0",
@@ -24,7 +26,8 @@
     "react-native-progress": "^3.2.0",
     "react-native-video": "frontendyteam/react-native-video",
     "react-redux": "^5.0.1",
-    "redux": "^3.6.0"
+    "redux": "^3.6.0",
+    "tcomb-form-native": "^0.6.3"
   },
   "devDependencies": {
     "babel-jest": "^18.0.0",

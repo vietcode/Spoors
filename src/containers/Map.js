@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import { graphql, compose } from 'react-apollo';
-import gql from 'graphql-tag';
 
 import Map from '../scenes/Explore';
 
