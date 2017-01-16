@@ -18,7 +18,7 @@ import reducers from './reducers';
 import Spoors from './containers/Spoors';
 
 const networkInterface = createNetworkInterface({
-  uri: 'http://localhost:4000/api',
+  uri: 'https://phuot.herokuapp.com/api',
   batchInterval: 10,
   opts: {
     // Options to pass along to `fetch`
